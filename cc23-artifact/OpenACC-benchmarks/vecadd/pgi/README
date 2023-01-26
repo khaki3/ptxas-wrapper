@@ -1,0 +1,68 @@
+dmikushin@tesla-cmc:~/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi$ make clean
+rm -rf *.o vecadd
+dmikushin@tesla-cmc:~/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi$ make
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo -Dreal=float -c ../vecadd.c -o vecadd.o
+vecadd:
+     24, Generating present(w2[0:szarray])
+         Generating present(w1[0:szarray])
+         Generating present(w0[0:szarray])
+         Generating compute capability 1.0 binary
+         Generating compute capability 2.0 binary
+     29, Loop is parallelizable
+     34, Loop is parallelizable
+     39, Loop is parallelizable
+         Accelerator kernel generated
+         34, #pragma acc loop gang, vector(4) /* blockIdx.y threadIdx.y */
+         39, #pragma acc loop gang, vector(64) /* blockIdx.x threadIdx.x */
+             CC 1.0 : 18 registers; 68 shared, 8 constant, 0 local memory bytes
+             CC 2.0 : 22 registers; 0 shared, 84 constant, 0 local memory bytes
+main:
+    116, Accelerator scalar kernel generated
+         Generating compute capability 1.0 binary
+         CC 1.0 : 0 registers; 0 shared, 0 constant, 0 local memory bytes
+         Generating compute capability 2.0 binary
+         CC 2.0 : 2 registers; 0 shared, 32 constant, 0 local memory bytes
+    143, Generating create(w2[0:szarray])
+         Generating create(w1[0:szarray])
+         Generating create(w0[0:szarray])
+    169, Generating update device(w2[0:szarray])
+         Generating update device(w1[0:szarray])
+         Generating update device(w0[0:szarray])
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo -c ../timing.c -o timing.o
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo vecadd.o timing.o -o vecadd
+dmikushin@tesla-cmc:~/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi$ ./vecadd 256 256 256 6
+initial mean = 0.518567
+init time = 0.900639 sec
+device buffer alloc time = 0.000684 sec
+data load time = 0.056666 sec (3.308890 GB/sec)
+compute time = 0.015205 sec
+final mean = 0.499976
+
+Accelerator Kernel Timing data
+/home/dmikushin/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi/../vecadd.c
+  vecadd
+    24: region entered 6 times
+        time(us): total=15,198 init=2 region=15,196
+                  kernels=14,575
+        w/o init: total=15,196 max=2,696 min=2,490 avg=2,532
+        39: kernel launched 6 times
+            grid: [4x64]  block: [64x4]
+            time(us): total=14,575 max=2,436 min=2,420 avg=2,429
+/home/dmikushin/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi/../vecadd.c
+  main
+    169: region entered 1 time
+        time(us): total=101,747
+                  data=56,584
+/home/dmikushin/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi/../vecadd.c
+  main
+    143: region entered 1 time
+        time(us): init=
+/home/dmikushin/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi/../vecadd.c
+  main
+    116: region entered 1 time
+        time(us): total=900,617 init=900,383 region=234
+                  kernels=17
+        w/o init: total=234 max=234 min=234 avg=234
+        116: kernel launched 1 times
+            grid: [1]  block: [1]
+            time(us): total=17 max=17 min=17 avg=17

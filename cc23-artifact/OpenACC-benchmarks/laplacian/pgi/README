@@ -1,0 +1,68 @@
+dmikushin@tesla-cmc:~/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/kernelgen$ cd  ../pgi/
+dmikushin@tesla-cmc:~/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi$ make clean
+rm -rf *.o laplacian
+dmikushin@tesla-cmc:~/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi$ vi README_Kepler 
+dmikushin@tesla-cmc:~/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi$ make
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo -Dreal=float -c ../laplacian.c -o laplacian.o
+laplacian:
+     25, Generating present(w1[0:szarray])
+         Generating present(w0[0:szarray])
+         Generating compute capability 1.0 binary
+         Generating compute capability 2.0 binary
+     30, Loop is parallelizable
+     35, Loop is parallelizable
+     40, Loop is parallelizable
+         Accelerator kernel generated
+         35, #pragma acc loop gang, vector(4) /* blockIdx.y threadIdx.y */
+         40, #pragma acc loop gang, vector(64) /* blockIdx.x threadIdx.x */
+             CC 1.0 : 28 registers; 68 shared, 8 constant, 0 local memory bytes
+             CC 2.0 : 31 registers; 0 shared, 84 constant, 0 local memory bytes
+main:
+    123, Accelerator scalar kernel generated
+         Generating compute capability 1.0 binary
+         CC 1.0 : 0 registers; 0 shared, 0 constant, 0 local memory bytes
+         Generating compute capability 2.0 binary
+         CC 2.0 : 2 registers; 0 shared, 32 constant, 0 local memory bytes
+    149, Generating create(w1[0:szarray])
+         Generating create(w0[0:szarray])
+    174, Generating update device(w1[0:szarray])
+         Generating update device(w0[0:szarray])
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo -c ../timing.c -o timing.o
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo laplacian.o timing.o -o laplacian
+dmikushin@tesla-cmc:~/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi$ ./laplacian 256 256 256 6
+alpha = 0.840188, beta = 0.394383
+initial mean = 0.500026
+init time = 1.176078 sec
+device buffer alloc time = 0.000814 sec
+data load time = 0.042218 sec (2.960817 GB/sec)
+compute time = 0.032910 sec
+final mean = 0.500032
+
+Accelerator Kernel Timing data
+/home/dmikushin/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi/../laplacian.c
+  laplacian
+    25: region entered 6 times
+        time(us): total=32,903 init=2 region=32,901
+                  kernels=32,234
+        w/o init: total=32,901 max=5,688 min=5,350 avg=5,483
+        40: kernel launched 6 times
+            grid: [4x63]  block: [64x4]
+            time(us): total=32,234 max=5,502 min=5,279 avg=5,372
+/home/dmikushin/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi/../laplacian.c
+  main
+    174: region entered 1 time
+        time(us): total=102,989
+                  data=42,118
+/home/dmikushin/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi/../laplacian.c
+  main
+    149: region entered 1 time
+        time(us): init=
+/home/dmikushin/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi/../laplacian.c
+  main
+    123: region entered 1 time
+        time(us): total=1,176,053 init=1,175,790 region=263
+                  kernels=20
+        w/o init: total=263 max=263 min=263 avg=263
+        123: kernel launched 1 times
+            grid: [1]  block: [1]
+            time(us): total=20 max=20 min=20 avg=20

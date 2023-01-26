@@ -1,0 +1,13 @@
+stencil jacobi_patus (
+	float grid U(0 .. nx-1, 0 .. ny-1),
+	float param c0, float param c1, float param c2)
+{
+	domainsize = (1 .. nx-2, 1 .. ny-2);
+    
+	operation
+	{
+		U[x, y; t+1] = c0 *  U[x, y; t] +
+			c1 * (U[x-1, y; t] + U[x, y-1; t] + U[x+1, y; t] + U[x, y+1; t]) +
+			c2 * (U[x-1, y-1; t] + U[x-1, y+1; t] + U[x+1, y-1; t] + U[x+1, y+1; t]);
+	}
+}

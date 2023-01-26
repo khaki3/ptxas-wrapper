@@ -1,0 +1,53 @@
+/**
+ * In Conway's Game of Life, each cell (also called an "organism" in this
+ * context) can be either "live" or "dead". Starting from an initial
+ * configuration the following "genetic" rules are applied:
+ *
+ * - Survival: A "live" cell with two or three neighbors remains "live".
+ *
+ * - Death: A "live" cell "dies" from overpopulation if there are more than
+ *   three "live" neighbors or from isolation if there are fewer than two
+ *   "live" neighbors.
+ *
+ * - Birth: A "dead" cell becomes "live" if it has exactly three "live"
+ *   neighbors.
+ */
+stencil gameoflife_patus (float grid U(0 .. nx-1, 0 .. ny-1))
+{
+	domainsize = (1 .. nx-2, 1 .. ny-2);
+    
+    
+    // Patus currently does not support any conditionals/predicates.
+    // But we can still implement Conway's Game of Life with the following
+    // trick: In the grid U, a cell is "live" if the value on the grid point
+    // is 1, and "dead" if the value is close to 0.
+    // If we sum up all the neighbors around the center cell, we obtain the
+    // number of "live" neighbors (variable L).
+    // To implement the rules, we construct a polynomial P(L, u) (L being
+    // the number of "live" neighbors and u the state of the center cell),
+    // which has zeros when the center cell remains/becomes "live", i.e.,
+    // Survival:  P(2,1) = 0, P(3,1) = 0
+    // Death:     (no zeros)
+    // Birth:     P(3,0) = 0
+    // Thus, P(L, u) := (u+L-3)(L-3).
+    // Notice that u is in {0,1}. The first factor becomes 0 for L=2, u=1.
+    // The second factor is 0 for L=3 for both u=0,1.
+    // Now we map the zeros of P to 1 and all other values close to 0.
+    // This can be done with the function f(x) = 1 / (1 + Cx) for some large
+    // constant C >> 1.
+    
+    operation
+    {
+    	// some large number
+    	float C = 100000000000000000000;
+    	
+    	// count the number of "live" neighbors
+    	float L = U[x-1, y-1; t] + U[x, y-1; t] + U[x+1, y-1; t] +
+    	          U[x-1, y  ; t] +                U[x+1, y  ; t] +
+    	          U[x-1, y+1; t] + U[x, y+1; t] + U[x+1, y+1; t]; 
+ 
+ 		// apply the rules
+        U[x, y; t+1] = 1 / (1 + (U[x, y; t] + L - 3) * (L - 3) * C);
+	}
+}
+

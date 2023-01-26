@@ -1,0 +1,47 @@
+// Commenting on shfl's semantic
+// https://docs.nvidia.com/cuda/parallel-thread-execution/index.html#data-movement-and-conversion-instructions-shfl-sync
+
+// > All non-exited threads named in mask must execute the same intrinsic
+// > with the same mask, or the result is undefined.
+// wait for all threads in membermask to arrive
+wait_for_specified_threads(membermask);
+
+lane[4:0]  = [Thread].laneid;  // position of thread in warp
+bval[4:0] = b[4:0];            // source lane or lane offset (0..31)
+cval[4:0] = c[4:0];            // clamp value
+segmask[4:0] = c[12:8];                // => (32 - width) of __shfl_sync
+
+// get value of source register a if thread is active and
+// guard predicate true, else unpredictable
+if (isActive(Thread) && isGuardPredicateTrue(Thread)) {
+    SourceA[lane] = a;
+} else {
+    // Value of SourceA[lane] is unpredictable for
+    // inactive/predicated-off threads in warp
+}
+maxLane = (lane[4:0] & segmask[4:0]) | (cval[4:0] & ~segmask[4:0]);
+minLane = (lane[4:0] & segmask[4:0]);
+
+// width must be 2^n so minLane is always 32-2^n
+// minLane represents bits outside the width
+// maxLane is (minLane | (clamp-value & width)) -> first lane of the segment for .up; otherwise last lane
+
+// cval = 0b00000 when .up
+// cval = 0b11111 when .down
+// cval = 0b11111 when .bfly
+// cval = 0b11111 when .idx
+
+switch (.mode) {
+    case .up:    j = lane - bval; pval = (j >= maxLane); break;
+    case .down:  j = lane + bval; pval = (j <= maxLane); break;
+    case .bfly:  j = lane ^ bval; pval = (j <= maxLane); break;
+    case .idx:   j = minLane  | (bval[4:0] & ~segmask[4:0]);
+                                 pval = (j <= maxLane); break;
+}
+
+// > the lower/upper delta lanes will be unchanged
+if (!pval) j = lane;  // copy from own lane
+
+d = SourceA[j];       // copy input a from lane j
+if (dest predicate selected)
+    p = pval;

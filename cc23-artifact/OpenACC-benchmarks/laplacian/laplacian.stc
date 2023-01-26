@@ -1,0 +1,16 @@
+stencil laplacian_patus (float grid U(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+	float param alpha, float param beta)
+{
+	domainsize = (1 .. nx-2, 1 .. ny-2, 1 .. ns-2);
+	
+	operation
+	{
+		U[x, y, z; t+1] =
+			alpha * U[x, y, z; t] +
+			beta * (
+				U[x+1, y, z; t] + U[x-1, y, z; t] +
+				U[x, y+1, z; t] + U[x, y-1, z; t] +
+				U[x, y, z+1; t] + U[x, y, z-1; t]
+			);
+	}
+}

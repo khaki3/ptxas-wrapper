@@ -1,0 +1,620 @@
+#!/usr/bin/perl -w
+##===----------------------------------------------------------------------===##
+##
+##     KernelGen -- A prototype of LLVM-based auto-parallelizing Fortran/C
+##        compiler for NVIDIA GPUs, targeting numerical modeling code.
+##
+## This file is distributed under the University of Illinois Open Source
+## License. See LICENSE.TXT for details.
+##
+##===----------------------------------------------------------------------===##
+
+if (@ARGV < 6)
+{
+	print "Usage: benchmark <nx> <ny> <ns> <niters> <nruns> <target> [<target>]\n";
+	print "Example: kernelgen_runmode=1 kernelgen_szheap=\$((1024*1024*800)) kernelgen_verbose=\$((1<<6)) ./benchmark 512 256 256 10 10 kernelgen gcc\n";
+	exit(0);
+}
+
+my($nx) = $ARGV[0];
+my($ny) = $ARGV[1];
+my($ns) = $ARGV[2];
+my($niters) = $ARGV[3];
+my($nruns) = $ARGV[4];
+my(@targets) = @ARGV[5 .. @ARGV - 1];
+
+# Print floating-point value exactly as 8-symbols string.
+sub print_float
+{
+	my($value) = $_[0];
+	
+	my($width) = 6;
+	my($result) = "";
+	for ( ; $width >= 0; $width--)
+	{
+		my($tvalue) = sprintf("%.*g", $width, $value);
+		if (length($tvalue) <= 8)
+		{
+			while (length($tvalue) < 8)
+			{
+				$tvalue .= " ";
+			}
+			$result = $tvalue;
+			last;
+		}
+	}
+	if ($result eq "")
+	{
+		print "Error printing value $value\n";
+		exit(1);
+	}
+	
+	print "| $result ";
+}
+
+# Print string value exactly as 8-symbols string.
+sub print_string
+{
+	my($value) = $_[0];
+	my($width) = $_[1];
+	$value = substr($value, 0, $width);
+	printf("| %$width" . "s ", $value);
+}
+
+# Print floating-point or string value.
+sub print_field
+{
+	my($value) = $_[0];
+
+	if (($value ne "N/A") && ($value ne "FAIL"))
+	{
+		print_float($value);
+	}
+	else
+	{
+		printf("| %8s ", $value);
+	}
+}
+
+# Find average of values matching the specified filter.
+sub find_average
+{
+	my($output) = $_[0];
+	my($name) = $_[1];
+	my($filter) = $_[2];
+	my($result) = "";
+
+	my(@results) = ();
+	push(@results, $1) while($$output =~ /$filter/g);
+	
+	if (scalar(@results) == 0)
+	{
+		if ($name eq "")
+		{
+			$result = "N/A";
+		}
+		else
+		{
+			$result = "FAIL";
+		}
+	}
+	else
+	{
+		my($count) = 0;
+		$result = 0.0;
+		foreach $value (@results)
+		{
+			if (defined($value))
+			{
+				$value =~ s/\,//g;
+				$result += $value;
+				$count++;
+			}
+		}
+		$result /= $count;
+	}
+
+	return $result;
+}
+
+# Parse the test output.
+sub report_test
+{
+	my($target) = $_[0];
+	my($target_env) = $_[1];
+	my($name) = $_[2];
+	my($test) = $_[3];
+	my($output) = $_[4];
+	my($times_for_chart) = $_[5];
+	my($nregs_for_table) = $_[6];
+
+	my($init_mean) = find_average($output, "initial mean",
+		qr/initial\smean\s=\s([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)/);
+
+	my($init_time) = find_average($output, "",
+		qr/init\stime\s=\s([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)\ssec/);
+
+	my($alloc_time) = find_average($output, "",
+		qr/device\sbuffer\salloc\stime\s=\s([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)\ssec/);
+
+	my($load_time) = find_average($output, "",
+		qr/data\sload\stime\s=\s([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)\ssec/);
+
+	my($compute_time) = find_average($output, "compute time",
+		qr/compute\stime\s=\s([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)\ssec/);
+
+	my($kernel_name) = "";
+	if (($target eq "kernelgen") and (-f "$test/kernel"))
+	{
+		$kernel_name = `cat $test/kernel`;
+		$kernel_name =~ s/\n//;
+	}
+
+	my($kernel_time) = "N/A";
+	if (($target eq "kernelgen") and ($kernel_name ne ""))
+	{
+		$kernel_time = find_average($output, "",
+			qr/$kernel_name\stime\s=\s([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)\ssec/);
+	}
+	if ($target eq "pathscale")
+	{
+		my($joined_output) = $$output;
+		$joined_output =~ s/\n/ /g;
+		$joined_output =~ s/(avg=[0-9\,]+)/$1\n/g;
+		$joined_output =~ s/$name/\n$name/g;
+		$kernel_time = find_average(\$joined_output, "", qr/$name\s[^\n]*avg=([0-9\,]+)/);
+		if ($kernel_time ne "N/A")
+		{
+			$kernel_time = $kernel_time / 1e6;
+		}
+	}
+	if ($target eq "pgi")
+	{
+		my($joined_output) = $$output;
+		$joined_output =~ s/\n/ /g;
+		$joined_output =~ s/(avg=[0-9\,]+)/$1\n/g;
+		$joined_output =~ s/$name/\n$name/g;
+		$kernel_time = find_average(\$joined_output, "", qr/$name\s[^\n]*avg=([0-9\,]+)/);
+		if ($kernel_time ne "N/A")
+		{
+			$kernel_time = $kernel_time / 1e6;
+		}
+	}
+	if ($target eq "gcc")
+	{
+		# For GCC/CPU target, kernel time could be fairly set as total compute time
+		# divided by the number of iterations.
+		$kernel_time = $compute_time / $niters;
+	}
+	
+	my($kernel_nregs) = "N/A";
+	if (($target eq "kernelgen") and ($kernel_name ne ""))
+	{
+		$kernel_nregs = find_average($output, "",
+			qr/$kernel_name\:\sregcount\s=\s([0-9]+)\,/);
+	}
+	if ($target eq "pathscale")
+	{
+		if ($$output =~ m/$name\s+NVIDIA\s+devicenum\=\d+\n\s*time\(us\)\:\s*[\d+|,]+\n\s*(?<LINENO>[0-9]+)\:\skernel\slaunched/xs)
+		{
+			my($lineno) = $+{LINENO};
+			my($kernel_name) = "$name\_$lineno\_gpu";
+			my($regcount_output) = join("",
+				`bash -c "cd $test && OPENACC_PROFILING_FNAME=$kernel_name OPENACC_PROFILING_LINENO=$lineno make test NX=$nx NY=$ny NS=$ns NT=$niters 2>&1"`);
+			$kernel_nregs = find_average(\$regcount_output, "",
+				qr/$kernel_name\:$lineno\sregcount\s=\s([0-9]+)/);
+		}
+	}
+	if ($target eq "pgi")
+	{
+		if ($$output =~ m/$name\s+NVIDIA\s+devicenum\=\d+\n\s*time\(us\)\:\s*[\d+|,]+\n\s*(?<LINENO>[0-9]+)\:\skernel\slaunched/xs)
+		{
+			my($lineno) = $+{LINENO};
+			my($kernel_name) = "$name\_$lineno\_gpu";
+			my($regcount_output) = join("",
+				`bash -c "cd $test && OPENACC_PROFILING_FNAME=$kernel_name OPENACC_PROFILING_LINENO=$lineno make test NX=$nx NY=$ny NS=$ns NT=$niters 2>&1"`);
+			$kernel_nregs = find_average(\$regcount_output, "",
+				qr/$kernel_name\:$lineno\sregcount\s=\s([0-9]+)/);
+		}
+	}
+	if ($target eq "caps")
+	{
+		# Remove evil color codes!
+		$$output =~ s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g;
+		if ($$output =~ m/INFO\s\:(\s|\t)+Enter\s+kernels\s\(queue\=none\,\slocation\=(?<KERNEL_NAME>(\.|\/|\w)+)\:(?<LINENO>\d+)\)/xs)
+		{
+			my($lineno) = $+{LINENO};
+			my($kernel_name) = $+{KERNEL_NAME};
+			my($regcount_output) = join("",
+				`bash -c "cd $test && OPENACC_PROFILING_FNAME=$kernel_name OPENACC_PROFILING_LINENO=$lineno make test NX=$nx NY=$ny NS=$ns NT=$niters 2>&1"`);
+			$kernel_nregs = find_average(\$regcount_output, "",
+				qr/$kernel_name\:$lineno\sregcount\s=\s([0-9]+)/);
+			$kernel_time = find_average(\$regcount_output, "",
+				qr/$kernel_name\:$lineno\stime\s=\s([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)/);
+		}
+	}
+	
+	my($save_time) = find_average($output, "",
+		qr/data\ssave\stime\s=\s([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)\ssec/);
+
+	my($free_time) = find_average($output, "",
+		qr/device\sbuffer\sfree\stime\s=\s([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)\ssec/);
+
+	my($final_mean) = find_average($output, "final mean",
+		qr/final\smean\s=\s([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s)/);
+
+	print_field($init_mean);
+	print_field($init_time);
+	print_field($alloc_time);	
+	print_field($load_time);
+	print_field($compute_time);
+	print_field($kernel_time);
+	print_field($kernel_nregs);
+	print_field($save_time);
+	print_field($free_time);
+	print_field($final_mean);
+	
+	if ($target_env ne "")
+	{
+		$$times_for_chart{$name}{"$target^$target_env"} = $kernel_time;
+		$$nregs_for_table{$name}{"$target^$target_env"} = $kernel_nregs;
+	}
+	else
+	{
+		$$times_for_chart{$name}{"$target"} = $kernel_time;
+		$$nregs_for_table{$name}{"$target"} = $kernel_nregs;
+	}
+
+	print "|\n";
+}
+
+sub run_test
+{
+	my($target_name) = $_[0];
+	my($target_env) = $_[1];
+	my($name) = $_[2];
+	my($test) = $_[3];
+	my($nx) = $_[4];
+	my($ny) = $_[5];
+	my($ns) = $_[6];
+	my($niters) = $_[7];
+	my($output) = $_[8];
+
+	$$output .= join("", `bash -c "cd $test && $target_env make test NX=$nx NY=$ny NS=$ns NT=$niters 2>&1"`);
+}
+
+my($table_width) = 137;
+
+#
+# Iterate through all tests in the same directory.
+#
+use File::Basename;
+my($dir) = dirname(__FILE__);
+opendir(DIR, $dir) or die $!;
+my(@files) = sort(grep(!/^(\.+).*$/, readdir(DIR)));
+closedir(DIR);
+my(@tests) = ();
+foreach $file (@files)
+{
+	# Consider only directories.
+	next unless (-d "$dir/$file");
+
+	my($at_least_one_target) = 0;
+	foreach $target (@targets)
+	{
+		my($name) = $target;
+		$name =~ s/\^.*$//g;
+
+		if (-d "$dir/$file/$name")
+		{
+			$at_least_one_target = 1;
+			last;
+		}
+	}
+	next unless ($at_least_one_target == 1);
+
+	push(@tests, $file);
+}
+
+# For each run:
+my($irun) = 0;
+my(%outputs);
+my(%times_for_chart);
+my(%nregs_for_table);
+for ( ; $irun < $nruns; $irun++)
+{
+	%times_for_chart = ();
+
+	# Print header.
+	if ($irun > 0)
+	{
+		print "\n";
+	}
+	else
+	{
+		# If using one of known GPU-enabled targets, display
+		# the list of available GPUs.
+		if (grep( /^kernelgen$/, @targets) or grep( /^pathscale$/, @targets) or grep( /^pgi$/, @targets) or grep( /^caps$/, @targets))
+		{
+			print "---- Using the following CUDA driver: ----\n";
+			my($nvidia_driver) = join("", `cat /proc/driver/nvidia/version`);
+			print "$nvidia_driver";
+			print "------------------------------------------\n\n";
+			print "---- Using the following GPU(s): ----\n";
+			my($nvidia_smi) = `nvidia-smi -L`;
+			print "$nvidia_smi";
+			print "-------------------------------------\n\n";
+			if (grep( /^kernelgen$/, @targets))
+			{
+				print "---- Using the following KernelGen compiler: ----\n";
+				my($kernelgen_version) = `kernelgen-version`;
+				print "$kernelgen_version\n";
+				print "-------------------------------------------------\n\n";
+			}
+			if (grep( /^pathscale$/, @targets))
+			{
+				print "---- Using the following PathScale compiler: ----\n";
+				my($pathscale_version) = join("", `pathcc --version`);
+				print "$pathscale_version";
+				print "-------------------------------------------\n\n";
+			}
+			if (grep( /^pgi$/, @targets))
+			{
+				print "---- Using the following PGI compiler: ----\n";
+				my($pgi_version) = join("", `pgcc --version`);
+				print "$pgi_version";
+				print "-------------------------------------------\n\n";
+			}
+			if (grep( /^caps$/, @targets))
+			{
+				print "---- Using the following CAPS compiler: ----\n";
+				my($caps_version) = join("", `hmpp -V`);
+				print "$caps_version";
+				print "-------------------------------------------\n\n";
+			}
+		}
+	}
+	if ($nruns > 1)
+	{
+		print "-" x 14 . "\n";
+		printf("| RUN #%-5d |\n", $irun);
+	}
+	print "-" x $table_width . "\n";
+	printf("| %10s | %10s | %8s | %8s | %8s | %8s | %8s | %8s | %8s | %8s | %8s | %8s |\n",
+		"test", "target", "i_mean", "t_init", "t_alloc", "t_load", "t_comp",
+		"t_krn", "nreg_krn", "t_save", "t_free", "f_mean");
+	print "-" x $table_width . "\n";
+
+	# For each test:
+	foreach $file (@tests)
+	{
+		# For each selected target:
+		foreach $target (@targets)
+		{
+			# Parse target into target name and per-target environment variables setup.
+			my($target_env) = $target;
+			$target_env =~ m/^[^\^]*\^(?<ENV>.*)$/g;
+			if (defined($+{ENV}))
+			{
+				$target_env = $+{ENV};
+				$target_env =~ s/\^/ /g;
+			}
+			else
+			{
+				$target_env = "";
+			}
+			my($target_name) = $target;
+			$target_name =~ s/\^.*//g;
+
+			# Skip some tests, depending on target.
+			if ((($target_name eq "kernelgen") or ($target_name eq "pathscale") or ($target_name eq "pgi") or ($target_name eq "caps")) and
+				(($file eq "tricubic2") or ($file eq "whispering")))
+			{
+				next;
+			}
+			if (($target_name eq "patus") and (($file eq "sincos") or ($file eq "matmul")))
+			{
+				next;
+			}
+
+			print_string($file, 10);
+			print_string($target_name, 10);
+
+			# Consider only tests with existing folder for target
+			my($test) = "$dir/$file/$target_name";
+			if (!-d "$test")
+			{
+				my($output) = "";
+				report_test($target_name, $target_env, $file, $test, \$output, \%times_for_chart, \%nregs_for_table);
+				next;
+			}
+
+			if ($irun == 0)
+			{
+				$outputs{$target_name}{$file} = "";
+			}
+
+			my($output) = "";
+			run_test($target_name, $target_env, $file, $test, $nx, $ny, $ns, $niters, \$output);
+			$outputs{$file}{$target} .= $output;
+
+			report_test($target_name, $target_env, $file, $test, \$output, \%times_for_chart, \%nregs_for_table);
+		}
+	}
+
+	# Print footer.
+	print "-" x $table_width . "\n";
+}
+
+# If more than a single run, compute overall average.
+if ($nruns != 1)
+{
+	%times_for_chart = ();
+
+	# Print header.
+	print "\n";
+	print "-" x 24 . "\n";
+	printf("| AVERAGE OF %-4d RUNS |\n", $nruns);
+	print "-" x $table_width . "\n";
+	printf("| %10s | %10s | %8s | %8s | %8s | %8s | %8s | %8s | %8s | %8s | %8s | %8s |\n",
+		"test", "target", "i_mean", "t_init", "t_alloc", "t_load", "t_comp",
+		"t_krn", "nreg_krn", "t_save", "t_free", "f_mean");
+	print "-" x $table_width . "\n";
+
+	# For each test:
+	foreach $file (@tests)
+	{
+		# For each selected target:
+		foreach $target (@targets)
+		{
+			# Parse target into target name and per-target environment variables setup.
+			my($target_env) = $target;
+			$target_env =~ m/^[^\^]*\^(?<ENV>.*)$/g;
+			if (defined($+{ENV}))
+			{
+				$target_env = $+{ENV};
+				$target_env =~ s/\^/ /g;
+			}
+			else
+			{
+				$target_env = "";
+			}
+			my($target_name) = $target;
+			$target_name =~ s/\^.*//g;
+
+			# Skip some tests, depending on target.
+			if ((($target_name eq "kernelgen") or ($target_name eq "pathscale") or ($target_name eq "pgi") or ($target_name eq "caps")) and
+				(($file eq "tricubic2") or ($file eq "whispering")))
+			{
+				next;
+			}
+			if (($target_name eq "patus") and (($file eq "sincos") or ($file eq "matmul")))
+			{
+				next;
+			}
+
+			print_string($file, 10);
+			print_string($target_name, 10);
+
+			# Consider only tests with existing folder for target
+			my($test) = "$dir/$file/$target_name";
+			if (!-d "$test")
+			{
+				my($output) = "";
+				report_test($target_name, $target_env, $file, $test, \$output);
+				next;
+			}
+
+			report_test($target_name, $target_env, $file, $test, \$outputs{$file}{$target}, \%times_for_chart);
+		}
+	}
+
+	# Print footer.
+	print "-" x $table_width . "\n";
+}
+
+# If there are two targets, make up output data for
+# persentage chart.
+if (scalar(@targets) == 2)
+{
+	print "\nTimes for chart >>\n";
+	foreach $file (@tests)
+	{
+		my(@values) = ();
+		foreach $target (@targets)
+		{
+			my($value) = $times_for_chart{$file}{$target};
+			if (defined($value))
+			{
+				push(@values, $value);
+			}
+		}
+		if (scalar(@values) == 2)
+		{
+			if (($values[0] ne "N/A") and ($values[1] ne "N/A"))
+			{
+				print $file . " " . $values[0] . " " . $values[1] . " => " . ($values[1] / $values[0]) . "\n";
+			}
+		}
+	}
+	print "<< Times for chart\n";
+}
+
+# Make up output data for times/regcount table.
+print "\nData for table >>\n";
+if (scalar(@targets) > 0)
+{
+	my($i) = 1;
+	print " & \\multicolumn{2}{l|}{" . $targets[0] . "}";
+	for ( ; $i < scalar(@targets); $i++)
+	{
+		print " & \\multicolumn{2}{l|}{" . $targets[$i] . "}";
+	}
+	print " \\\\\n";
+	$i = 1;
+	print " & time & nregs";
+	for ( ; $i < scalar(@targets); $i++)
+	{
+		print " & time & nregs";
+	}
+	print " \\\\\n";
+	foreach $file (@tests)
+	{
+		my($fully_missing_test) = 1;
+		foreach $target (@targets)
+		{
+			if (defined($times_for_chart{$file}{$target}))
+			{
+				$fully_missing_test = 0;
+				last;
+			}
+			if (defined($nregs_for_table{$file}{$target}))
+			{
+				$fully_missing_test = 0;
+				last;
+			}
+		}
+		if ($fully_missing_test)
+		{
+			next;
+		}
+		foreach $target (@targets)
+		{
+			if (!defined($times_for_chart{$file}{$target}))
+			{
+				$times_for_chart{$file}{$target} = "N/A";
+			}
+			if (!defined($nregs_for_table{$file}{$target}))
+			{
+				$nregs_for_table{$file}{$target} = "N/A";
+			}
+		}
+		$i = 1;
+		print "$file & " . $times_for_chart{$file}{$targets[0]} . " & " . $nregs_for_table{$file}{$targets[0]};
+		for ( ; $i < scalar(@targets); $i++)
+		{
+			print " & " . $times_for_chart{$file}{$targets[$i]} . " & " . $nregs_for_table{$file}{$targets[$i]};
+		}
+		print " \\\\\n";
+	}
+}
+print "<< Data for table\n";
+
+# Make up output data for KernelGen build report
+print "Data for report >>\n";
+if (grep(/^kernelgen$/, @targets))
+{
+	foreach $file (@tests)
+	{
+		if (!defined($times_for_chart{$file}{"kernelgen"}))
+		{
+			$times_for_chart{$file}{"kernelgen"} = "N/A";
+		}
+		if (!defined($nregs_for_table{$file}{"kernelgen"}))
+		{
+			$nregs_for_table{$file}{"kernelgen"} = "N/A";
+		}
+		print "$file & " . $times_for_chart{$file}{"kernelgen"} . " & " . $nregs_for_table{$file}{"kernelgen"} . "\n";
+	}
+}
+print "<< Data for report\n";

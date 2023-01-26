@@ -1,0 +1,12 @@
+stencil sincos_patus (
+	const float grid U(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+	const float grid V(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+	float grid UV(0 .. nx-1, 0 .. ny-1, 0 .. ns-1))
+{
+	domainsize = (0 .. nx-1, 0 .. ny-1, 0 .. ns-1);
+    
+	operation
+	{
+		UV[x, y, z; t] = sin(U[x, y, z]) + cos(V[x, y, z]);
+	}
+}

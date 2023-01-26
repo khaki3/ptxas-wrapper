@@ -1,0 +1,92 @@
+#!/usr/bin/perl -w
+##===----------------------------------------------------------------------===##
+##
+##     KernelGen -- A prototype of LLVM-based auto-parallelizing Fortran/C
+##        compiler for NVIDIA GPUs, targeting numerical modeling code.
+##
+## This file is distributed under the University of Illinois Open Source
+## License. See LICENSE.TXT for details.
+##
+##===----------------------------------------------------------------------===##
+
+# Create LaTeX-compatible table of the following fashion:
+#
+# name & report1_target1_time & report1_target1_nregs & report1_target2_time & report1_target2_nregs &
+#        report2_target1_time & report2_target1_nregs & report2_target2_time & report2_target2_nregs
+#
+if (scalar(@ARGV) == 0)
+{
+	print "Usage: mkchart <report1> [<report2> ...]\n";
+	exit(1);
+}
+
+sub formatted_float
+{
+	my($value) = $_[0];
+	if ($value =~ m/^[0-9]+$/)
+	{
+		return $value;
+	}
+	my($float) = sprintf("%f", $value);
+	return $float;
+}
+
+my(@header) = ();
+my(%table);
+my(@reports) = @ARGV;
+for ($i = 0; $i < scalar(@reports); $i++)
+{
+	my($report) = $reports[$i];
+	my($content) = join("", `cat $report`);
+	if ($content =~ m/Data\sfor\stable\s\>\>\n(?<CONTENT>.*)\<\<\sData\sfor\stable/xs)
+	{
+		$content = $+{CONTENT};
+		my(@lines) = split("\n", $content);
+		my($iline) = 0;
+		for ( ; $iline < scalar(@lines); $iline++)
+		{
+			my($line) = $lines[$iline];
+			$line =~ s/\s\\\\$//;
+			if ($line =~ m/^(?<NAME>\w+)\s\&\s/)
+			{
+				my($name) = $+{NAME};
+				$line =~ s/(?<VALUE>[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)/@{[formatted_float($+{VALUE})]}/xg;
+				if ($i == 0)
+				{
+					$table{$name} = $line;
+				}
+				else
+				{
+					$line =~ s/\w+\s\&\s//;
+					$table{$name} .= " & " . $line;
+				}
+			}
+			else
+			{
+				if ($i == 0)
+				{
+					push(@header, $line);
+				}
+				else
+				{
+					$header[$iline] .= $line;
+				}
+			}
+		}
+	}
+	else
+	{
+		print "Error parsing input file $report\n";
+		exit(1);
+	}
+}
+
+foreach $line (@header)
+{
+	print "$line \\\\\n";
+}
+foreach $name (sort keys %table)
+{
+     print $table{$name} . " \\\\\n";
+}
+

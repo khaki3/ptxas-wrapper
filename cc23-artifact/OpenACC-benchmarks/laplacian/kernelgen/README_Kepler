@@ -1,0 +1,176 @@
+marcusmae@M17xR4:~/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/kernelgen$ make
+kernelgen-gcc -D_GNU_SOURCE -Dreal=float -std=c99 -c ../laplacian.c -o laplacian.o
+subloop exctracted!!
+subloop exctracted!!
+KernelGen : NumExtractedLoops = 1 CurrentFunction:"laplacian" CurrentHeader:"10_orig.header"
+KernelGen : NumExtractedLoops = 2 CurrentFunction:"main" CurrentHeader:"27_orig.header"
+KernelGen : NumExtractedLoops = 3 CurrentFunction:"main" CurrentHeader:"22_orig.header"
+KernelGen : NumExtractedLoops = 4 CurrentFunction:"main" CurrentHeader:"14_orig.header"
+kernelgen-gcc -D_GNU_SOURCE -c ../timing.c -o timing.o
+kernelgen-gcc laplacian.o timing.o -o laplacian -lrt
+marcusmae@M17xR4:~/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/kernelgen$ kernelgen_runmode=1 kernelgen_verbose=64 kernelgen_szheap=$((1024*1024*512)) ./laplacian 256 256 256 6
+Host call: clock_gettime
+ptxas -v -arch=sm_30 -m64 /tmp/41bfb31e.ptx -o /tmp/27c3b251.cubin --cloning=no 
+ptxas info    : 82036 bytes gmem
+ptxas info    : Function properties for kernelgen_launch
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_memalign
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_free
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_start
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_hostcall
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for get_time_diff
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Compiling entry function '__kernelgen_main' for 'sm_30'
+ptxas info    : Function properties for __kernelgen_main
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 63 registers, 264 bytes cumulative stack size, 328 bytes cmem[0]
+ptxas info    : Function properties for get_time
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_finish
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for _main
+    136 bytes stack frame, 144 bytes spill stores, 136 bytes spill loads
+ptxas info    : Function properties for laplacian
+    128 bytes stack frame, 124 bytes spill stores, 124 bytes spill loads
+Merge: /tmp/27c3b251.cubin /tmp/781023e5.cubin
+LEPC = 0x3b4c0
+Loaded '__kernelgen_main' at: 0xfc6980
+ptxas -v -arch=sm_30 -m64 /tmp/8419ebcb.ptx -o /tmp/12a0d4da.cubin --cloning=no --maxrregcount 63 
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function 'kernelgen_monitor' for 'sm_30'
+ptxas info    : Function properties for kernelgen_monitor
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 6 registers, 328 bytes cmem[0]
+regcount = 6, size = 192
+Loaded 'kernelgen_monitor' at: 0x20e99c0
+getenv time = 2.194440e-04 sec
+atoi time = 8.761500e-05 sec
+atoi time = 7.959100e-05 sec
+atoi time = 7.779700e-05 sec
+atoi time = 1.024170e-04 sec
+rand time = 1.277200e-04 sec
+rand time = 1.262160e-04 sec
+alpha = 0.840188, beta = 0.394383
+printf time = 2.190300e-04 sec
+Kernel function call __kernelgen_main_loop_14
+__kernelgen_main_loop_14 @ 0xe56b0cd20a5dc64c1f0edf0935bd68e1
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_main_loop_14: compile started --------------------->
+<------------------ __kernelgen_main_loop_14: compile completed ------------------->
+
+
+<------------------ __kernelgen_main_loop_14: compile started --------------------->
+ld -shared -o /tmp/a2882f50.so /tmp/fd94ca9d.o 
+Loaded '__kernelgen_main_loop_14' at: 0x7f11840402a0
+__kernelgen_main_loop_14 time = 9.595794e-01 sec
+initial mean = 0.500026
+printf time = 2.853730e-04 sec
+clock_gettime time = 1.799280e-04 sec
+Launcher invokes kernel __kernelgen_laplacian_loop_10
+Launcher invokes kernel __kernelgen_laplacian_loop_6_orig_orig
+Launcher invokes kernel __kernelgen_laplacian_loop_8_orig
+Kernel function call __kernelgen_main_loop_22
+__kernelgen_main_loop_22 @ 0xbc639f7b0028ce9125c1511495de8d80
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_main_loop_22: compile started --------------------->
+<------------------ __kernelgen_main_loop_22: compile completed ------------------->
+
+Kernel function call __kernelgen_laplacian_loop_10
+__kernelgen_laplacian_loop_10 @ 0xc8da405cea7533d23492ab1928d7f8da
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_laplacian_loop_10: compile started --------------------->
+<------------------ __kernelgen_laplacian_loop_10: compile completed ------------------->
+
+ptxas -v -arch=sm_30 -m64 /tmp/ae785467.ptx -o /tmp/57ed5b7a.cubin --cloning=no --maxrregcount 63 
+ptxas info    : 9 bytes gmem
+ptxas info    : Compiling entry function '__kernelgen_laplacian_loop_10' for 'sm_30'
+ptxas info    : Function properties for __kernelgen_laplacian_loop_10
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 21 registers, 328 bytes cmem[0]
+regcount = 21, size = 704
+Loaded '__kernelgen_laplacian_loop_10' at: 0x20f46b0
+Launching kernel __kernelgen_laplacian_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 63, 63 }
+Finishing kernel __kernelgen_laplacian_loop_10
+__kernelgen_laplacian_loop_10 time = 4.318663e-03 sec
+only the kernel execution time = 4.175680e-03 sec
+Kernel function call __kernelgen_laplacian_loop_10
+__kernelgen_laplacian_loop_10 @ 0x7bdf15320df68bdf9a86e77703b8e3d1
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_laplacian_loop_10: compile started --------------------->
+<------------------ __kernelgen_laplacian_loop_10: compile completed ------------------->
+
+ptxas -v -arch=sm_30 -m64 /tmp/70e6429f.ptx -o /tmp/5310e147.cubin --cloning=no --maxrregcount 63 
+ptxas info    : 9 bytes gmem
+ptxas info    : Compiling entry function '__kernelgen_laplacian_loop_10' for 'sm_30'
+ptxas info    : Function properties for __kernelgen_laplacian_loop_10
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 21 registers, 328 bytes cmem[0]
+regcount = 21, size = 704
+Loaded '__kernelgen_laplacian_loop_10' at: 0x20f8ec0
+Launching kernel __kernelgen_laplacian_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 63, 63 }
+Finishing kernel __kernelgen_laplacian_loop_10
+__kernelgen_laplacian_loop_10 time = 4.319265e-03 sec
+only the kernel execution time = 4.179776e-03 sec
+Kernel function call __kernelgen_laplacian_loop_10
+__kernelgen_laplacian_loop_10 @ 0xc8da405cea7533d23492ab1928d7f8da
+Launching kernel __kernelgen_laplacian_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 63, 63 }
+Finishing kernel __kernelgen_laplacian_loop_10
+__kernelgen_laplacian_loop_10 time = 4.234864e-03 sec
+only the kernel execution time = 4.171616e-03 sec
+Kernel function call __kernelgen_laplacian_loop_10
+__kernelgen_laplacian_loop_10 @ 0x7bdf15320df68bdf9a86e77703b8e3d1
+Launching kernel __kernelgen_laplacian_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 63, 63 }
+Finishing kernel __kernelgen_laplacian_loop_10
+__kernelgen_laplacian_loop_10 time = 4.215829e-03 sec
+only the kernel execution time = 4.169888e-03 sec
+Kernel function call __kernelgen_laplacian_loop_10
+__kernelgen_laplacian_loop_10 @ 0xc8da405cea7533d23492ab1928d7f8da
+Launching kernel __kernelgen_laplacian_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 63, 63 }
+Finishing kernel __kernelgen_laplacian_loop_10
+__kernelgen_laplacian_loop_10 time = 4.213378e-03 sec
+only the kernel execution time = 4.167232e-03 sec
+Kernel function call __kernelgen_laplacian_loop_10
+__kernelgen_laplacian_loop_10 @ 0x7bdf15320df68bdf9a86e77703b8e3d1
+Launching kernel __kernelgen_laplacian_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 63, 63 }
+Finishing kernel __kernelgen_laplacian_loop_10
+__kernelgen_laplacian_loop_10 time = 4.227330e-03 sec
+only the kernel execution time = 4.165888e-03 sec
+clock_gettime time = 1.379180e-04 sec
+compute time = 0.480058 sec
+printf time = 9.862300e-05 sec
+Kernel function call __kernelgen_main_loop_27
+__kernelgen_main_loop_27 @ 0xacb5836758e72c3b7ed43730caac7c5e
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_main_loop_27: compile started --------------------->
+<------------------ __kernelgen_main_loop_27: compile completed ------------------->
+
+
+<------------------ __kernelgen_main_loop_27: compile started --------------------->
+ld -shared -o /tmp/e9acb56d.so /tmp/9640865a.o 
+Loaded '__kernelgen_main_loop_27' at: 0x7f1183e3f240
+__kernelgen_main_loop_27 time = 3.522828e-01 sec
+final mean = 492.173248
+printf time = 1.368790e-04 sec
+fflush time = 5.532100e-05 sec
+Kernel __kernelgen_main has finished

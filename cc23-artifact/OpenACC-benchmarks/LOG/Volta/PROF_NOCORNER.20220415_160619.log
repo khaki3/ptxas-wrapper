@@ -1,0 +1,394 @@
+== divergence NOCORNER
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'divergence_63_gpu' for 'sm_70'
+ptxas info    : Function properties for divergence_63_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 48 registers, 420 bytes cmem[0]
+==103586== NVPROF is profiling process 103586, command: ./divergence 512 1024 1024 10
+==103586== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+alpha = 0.680375, beta = -0.211234, gamma = 0.566198
+initial mean = -0.000003
+init time = 0.280216 sec
+device buffer alloc time = 0.157293 sec
+data load time = 0.805373 sec (7.449962 GB/sec)
+compute time = 6.296672 sec
+data save time = 0.275673 sec (7.254980 GB/sec)
+device buffer free time = 7.535086 sec
+final mean = -0.000002
+==103586== Profiling application: ./divergence 512 1024 1024 10
+==103586== Profiling result:
+==103586== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla V100-SXM2-16GB (0)","divergence_63_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",84.051859%,84.133277%,84.096019%
+"Tesla V100-SXM2-16GB (0)","divergence_63_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.042680%,0.043521%,0.043160%
+"Tesla V100-SXM2-16GB (0)","divergence_63_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",6.587856%,6.622521%,6.601372%
+"Tesla V100-SXM2-16GB (0)","divergence_63_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",1.595163%,1.602672%,1.599292%
+"Tesla V100-SXM2-16GB (0)","divergence_63_gpu",10,"achieved_occupancy","Achieved Occupancy",0.453420,0.453704,0.453527
+"Tesla V100-SXM2-16GB (0)","divergence_63_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"Tesla V100-SXM2-16GB (0)","divergence_63_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",98.956822%,98.956822%,98.956822%
+"Tesla V100-SXM2-16GB (0)","divergence_63_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.007687%,0.008254%,0.008012%
+"Tesla V100-SXM2-16GB (0)","divergence_63_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",3.481228%,3.500221%,3.488505%
+"Tesla V100-SXM2-16GB (0)","divergence_63_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",3.286538%,3.305964%,3.296389%
+"Tesla V100-SXM2-16GB (0)","divergence_63_gpu",10,"stall_other","Issue Stall Reasons (Other)",0.864604%,0.870548%,0.867251%
+"Tesla V100-SXM2-16GB (0)","divergence_63_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+== gameoflife NOCORNER
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'gameoflife_55_gpu' for 'sm_70'
+ptxas info    : Function properties for gameoflife_55_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 40 registers, 380 bytes cmem[0], 16 bytes cmem[2]
+==105712== NVPROF is profiling process 105712, command: ./gameoflife 32768 32768 10
+==105712== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+initial mean = -0.000003
+init time = 0.278869 sec
+device buffer alloc time = 0.150987 sec
+data load time = 0.724578 sec (11.040917 GB/sec)
+compute time = 6.607175 sec
+data save time = 0.497745 sec (8.036241 GB/sec)
+device buffer free time = 7.980552 sec
+final mean = -0.000000
+==105712== Profiling application: ./gameoflife 32768 32768 10
+==105712== Profiling result:
+==105712== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla V100-SXM2-16GB (0)","gameoflife_55_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",83.989634%,84.178224%,84.071628%
+"Tesla V100-SXM2-16GB (0)","gameoflife_55_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.005040%,0.008970%,0.005872%
+"Tesla V100-SXM2-16GB (0)","gameoflife_55_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",8.178099%,8.256359%,8.232231%
+"Tesla V100-SXM2-16GB (0)","gameoflife_55_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",1.882244%,1.910152%,1.893816%
+"Tesla V100-SXM2-16GB (0)","gameoflife_55_gpu",10,"achieved_occupancy","Achieved Occupancy",0.742501,0.743022,0.742729
+"Tesla V100-SXM2-16GB (0)","gameoflife_55_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"Tesla V100-SXM2-16GB (0)","gameoflife_55_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.974136%,99.974136%,99.974136%
+"Tesla V100-SXM2-16GB (0)","gameoflife_55_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.002976%,0.003375%,0.003181%
+"Tesla V100-SXM2-16GB (0)","gameoflife_55_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",2.121261%,2.142380%,2.136148%
+"Tesla V100-SXM2-16GB (0)","gameoflife_55_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",2.809688%,2.862291%,2.832509%
+"Tesla V100-SXM2-16GB (0)","gameoflife_55_gpu",10,"stall_other","Issue Stall Reasons (Other)",0.820222%,0.830727%,0.824614%
+"Tesla V100-SXM2-16GB (0)","gameoflife_55_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+== gaussblur NOCORNER
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'gaussblur_60_gpu' for 'sm_70'
+ptxas info    : Function properties for gaussblur_60_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 51 registers, 408 bytes cmem[0]
+==108568== NVPROF is profiling process 108568, command: ./gaussblur 32768 32768 10
+==108568== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+s0 = 0.680375, s1 = -0.211234, s2 = 0.566198
+s4 = 0.596880, s5 = 0.823295, s8 = -0.604897
+initial mean = -0.000003
+init time = 0.274299 sec
+device buffer alloc time = 0.153900 sec
+data load time = 1.144928 sec (6.987338 GB/sec)
+compute time = 5.876217 sec
+data save time = 0.451933 sec (8.850867 GB/sec)
+device buffer free time = 7.627059 sec
+final mean = -0.000007
+==108568== Profiling application: ./gaussblur 32768 32768 10
+==108568== Profiling result:
+==108568== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla V100-SXM2-16GB (0)","gaussblur_60_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",62.540461%,62.679271%,62.607618%
+"Tesla V100-SXM2-16GB (0)","gaussblur_60_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.061825%,0.062782%,0.062208%
+"Tesla V100-SXM2-16GB (0)","gaussblur_60_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",12.609505%,12.667826%,12.643439%
+"Tesla V100-SXM2-16GB (0)","gaussblur_60_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",11.771774%,11.819963%,11.797752%
+"Tesla V100-SXM2-16GB (0)","gaussblur_60_gpu",10,"achieved_occupancy","Achieved Occupancy",0.483073,0.483238,0.483158
+"Tesla V100-SXM2-16GB (0)","gaussblur_60_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"Tesla V100-SXM2-16GB (0)","gaussblur_60_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.929850%,99.929850%,99.929850%
+"Tesla V100-SXM2-16GB (0)","gaussblur_60_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.007474%,0.008741%,0.007884%
+"Tesla V100-SXM2-16GB (0)","gaussblur_60_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",3.983224%,4.000619%,3.993609%
+"Tesla V100-SXM2-16GB (0)","gaussblur_60_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",7.588457%,7.617572%,7.604344%
+"Tesla V100-SXM2-16GB (0)","gaussblur_60_gpu",10,"stall_other","Issue Stall Reasons (Other)",1.279988%,1.285083%,1.283146%
+"Tesla V100-SXM2-16GB (0)","gaussblur_60_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+== gradient NOCORNER
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'gradient_65_gpu' for 'sm_70'
+ptxas info    : Function properties for gradient_65_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 46 registers, 420 bytes cmem[0]
+==110598== NVPROF is profiling process 110598, command: ./gradient 512 1024 1024 10
+==110598== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+alpha = 0.680375, beta = -0.211234, gamma = 0.566198
+initial mean = -0.000003
+init time = 0.266012 sec
+device buffer alloc time = 0.154230 sec
+data load time = 0.723184 sec (8.296641 GB/sec)
+compute time = 6.263258 sec
+data save time = 0.668343 sec (2.992474 GB/sec)
+device buffer free time = 7.809104 sec
+final mean = 0.000005
+==110598== Profiling application: ./gradient 512 1024 1024 10
+==110598== Profiling result:
+==110598== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla V100-SXM2-16GB (0)","gradient_65_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",89.402396%,89.428484%,89.420600%
+"Tesla V100-SXM2-16GB (0)","gradient_65_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",1.043389%,1.048996%,1.046521%
+"Tesla V100-SXM2-16GB (0)","gradient_65_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",4.864906%,4.880892%,4.871912%
+"Tesla V100-SXM2-16GB (0)","gradient_65_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",0.751951%,0.754074%,0.753079%
+"Tesla V100-SXM2-16GB (0)","gradient_65_gpu",10,"achieved_occupancy","Achieved Occupancy",0.473109,0.473319,0.473211
+"Tesla V100-SXM2-16GB (0)","gradient_65_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"Tesla V100-SXM2-16GB (0)","gradient_65_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",98.983810%,98.983810%,98.983810%
+"Tesla V100-SXM2-16GB (0)","gradient_65_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.005868%,0.006447%,0.006081%
+"Tesla V100-SXM2-16GB (0)","gradient_65_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",2.113556%,2.122446%,2.116602%
+"Tesla V100-SXM2-16GB (0)","gradient_65_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",1.412812%,1.418827%,1.415807%
+"Tesla V100-SXM2-16GB (0)","gradient_65_gpu",10,"stall_other","Issue Stall Reasons (Other)",0.368889%,0.370217%,0.369398%
+"Tesla V100-SXM2-16GB (0)","gradient_65_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+== jacobi NOCORNER
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'jacobi_33_gpu' for 'sm_70'
+ptxas info    : Function properties for jacobi_33_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 47 registers, 408 bytes cmem[0]
+==112056== NVPROF is profiling process 112056, command: ./jacobi 32768 32768 10
+==112056== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+c0 = 0.680375, c1 = -0.052809, c2 = 0.141550
+initial mean = -0.000003
+init time = 0.270017 sec
+device buffer alloc time = 0.154093 sec
+data load time = 1.829603 sec (4.372534 GB/sec)
+compute time = 5.857050 sec
+data save time = 0.465946 sec (8.584688 GB/sec)
+device buffer free time = 8.306779 sec
+final mean = -0.000014
+==112056== Profiling application: ./jacobi 32768 32768 10
+==112056== Profiling result:
+==112056== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla V100-SXM2-16GB (0)","jacobi_33_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",79.692080%,80.086613%,79.939731%
+"Tesla V100-SXM2-16GB (0)","jacobi_33_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.019308%,0.021574%,0.020387%
+"Tesla V100-SXM2-16GB (0)","jacobi_33_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",9.359819%,9.546074%,9.431027%
+"Tesla V100-SXM2-16GB (0)","jacobi_33_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",2.620152%,2.683478%,2.641625%
+"Tesla V100-SXM2-16GB (0)","jacobi_33_gpu",10,"achieved_occupancy","Achieved Occupancy",0.488609,0.488813,0.488722
+"Tesla V100-SXM2-16GB (0)","jacobi_33_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"Tesla V100-SXM2-16GB (0)","jacobi_33_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.960567%,99.960567%,99.960567%
+"Tesla V100-SXM2-16GB (0)","jacobi_33_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.007346%,0.008501%,0.007863%
+"Tesla V100-SXM2-16GB (0)","jacobi_33_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",3.701014%,3.775846%,3.729446%
+"Tesla V100-SXM2-16GB (0)","jacobi_33_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",3.721243%,3.793983%,3.750062%
+"Tesla V100-SXM2-16GB (0)","jacobi_33_gpu",10,"stall_other","Issue Stall Reasons (Other)",0.476933%,0.485031%,0.479859%
+"Tesla V100-SXM2-16GB (0)","jacobi_33_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+== lapgsrb NOCORNER
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'lapgsrb_63_gpu' for 'sm_70'
+ptxas info    : Function properties for lapgsrb_63_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 86 registers, 408 bytes cmem[0]
+==115181== NVPROF is profiling process 115181, command: ./lapgsrb 512 1024 1024 10
+==115181== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+c0 = 0.680375, c1 = -0.035206, c2 = 0.047183, c3 = 0.099480
+initial mean = 0.000018
+init time = 0.267759 sec
+device buffer alloc time = 0.077386 sec
+data load time = 0.864631 sec (4.626250 GB/sec)
+compute time = 3.825929 sec
+data save time = 0.260897 sec (7.665848 GB/sec)
+device buffer free time = 5.028935 sec
+final mean = 0.002700
+==115181== Profiling application: ./lapgsrb 512 1024 1024 10
+==115181== Profiling result:
+==115181== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla V100-SXM2-16GB (0)","lapgsrb_63_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",66.902449%,70.494626%,69.981445%
+"Tesla V100-SXM2-16GB (0)","lapgsrb_63_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.983378%,1.102616%,0.999140%
+"Tesla V100-SXM2-16GB (0)","lapgsrb_63_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",13.412096%,15.030935%,13.646475%
+"Tesla V100-SXM2-16GB (0)","lapgsrb_63_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",3.168440%,3.559877%,3.223552%
+"Tesla V100-SXM2-16GB (0)","lapgsrb_63_gpu",10,"achieved_occupancy","Achieved Occupancy",0.217933,0.218764,0.218522
+"Tesla V100-SXM2-16GB (0)","lapgsrb_63_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"Tesla V100-SXM2-16GB (0)","lapgsrb_63_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",96.176505%,96.176505%,96.176505%
+"Tesla V100-SXM2-16GB (0)","lapgsrb_63_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.011559%,0.013633%,0.011943%
+"Tesla V100-SXM2-16GB (0)","lapgsrb_63_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",4.982742%,5.585401%,5.069996%
+"Tesla V100-SXM2-16GB (0)","lapgsrb_63_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",5.351286%,6.015629%,5.444425%
+"Tesla V100-SXM2-16GB (0)","lapgsrb_63_gpu",10,"stall_other","Issue Stall Reasons (Other)",1.595598%,1.789461%,1.623022%
+"Tesla V100-SXM2-16GB (0)","lapgsrb_63_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+== laplacian NOCORNER
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'laplacian_63_gpu' for 'sm_70'
+ptxas info    : Function properties for laplacian_63_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 53 registers, 400 bytes cmem[0]
+==116641== NVPROF is profiling process 116641, command: ./laplacian 512 1024 1024 10
+==116641== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+alpha = 0.680375, beta = -0.211234
+initial mean = 0.000018
+init time = 0.295014 sec
+device buffer alloc time = 0.076511 sec
+data load time = 0.424973 sec (14.118559 GB/sec)
+compute time = 3.287764 sec
+data save time = 0.219254 sec (9.121855 GB/sec)
+device buffer free time = 4.008602 sec
+final mean = 0.000003
+==116641== Profiling application: ./laplacian 512 1024 1024 10
+==116641== Profiling result:
+==116641== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla V100-SXM2-16GB (0)","laplacian_63_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",74.270843%,75.800017%,75.233436%
+"Tesla V100-SXM2-16GB (0)","laplacian_63_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.079132%,0.083320%,0.080783%
+"Tesla V100-SXM2-16GB (0)","laplacian_63_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",10.721005%,11.399127%,10.975198%
+"Tesla V100-SXM2-16GB (0)","laplacian_63_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",2.122289%,2.256579%,2.171368%
+"Tesla V100-SXM2-16GB (0)","laplacian_63_gpu",10,"achieved_occupancy","Achieved Occupancy",0.335369,0.345614,0.341709
+"Tesla V100-SXM2-16GB (0)","laplacian_63_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"Tesla V100-SXM2-16GB (0)","laplacian_63_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",98.259282%,98.259282%,98.259282%
+"Tesla V100-SXM2-16GB (0)","laplacian_63_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.012096%,0.013666%,0.012841%
+"Tesla V100-SXM2-16GB (0)","laplacian_63_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",5.363855%,5.711591%,5.492132%
+"Tesla V100-SXM2-16GB (0)","laplacian_63_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",4.995028%,5.300628%,5.106762%
+"Tesla V100-SXM2-16GB (0)","laplacian_63_gpu",10,"stall_other","Issue Stall Reasons (Other)",0.906082%,0.965277%,0.927481%
+"Tesla V100-SXM2-16GB (0)","laplacian_63_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+== tricubic NOCORNER
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'tricubic_51_gpu' for 'sm_70'
+ptxas info    : Function properties for tricubic_51_gpu
+    40 bytes stack frame, 68 bytes spill stores, 60 bytes spill loads
+ptxas info    : Used 128 registers, 416 bytes cmem[0], 32 bytes cmem[2]
+==125047== NVPROF is profiling process 125047, command: ./tricubic 512 1024 1024 10
+==125047== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+initial mean = 0.000003
+init time = 0.263793 sec
+device buffer alloc time = 0.187983 sec
+data load time = 1.910319 sec (5.234728 GB/sec)
+compute time = 38.400297 sec
+data save time = 0.404149 sec (4.948668 GB/sec)
+device buffer free time = 40.902877 sec
+final mean = -0.000032
+==125047== Profiling application: ./tricubic 512 1024 1024 10
+==125047== Profiling result:
+==125047== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla V100-SXM2-16GB (0)","tricubic_51_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",51.299158%,51.541600%,51.487162%
+"Tesla V100-SXM2-16GB (0)","tricubic_51_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",1.384044%,1.395032%,1.390393%
+"Tesla V100-SXM2-16GB (0)","tricubic_51_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",22.932988%,23.073720%,22.967608%
+"Tesla V100-SXM2-16GB (0)","tricubic_51_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",9.596594%,9.639869%,9.615104%
+"Tesla V100-SXM2-16GB (0)","tricubic_51_gpu",10,"achieved_occupancy","Achieved Occupancy",0.198091,0.198602,0.198417
+"Tesla V100-SXM2-16GB (0)","tricubic_51_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"Tesla V100-SXM2-16GB (0)","tricubic_51_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",98.281895%,98.281895%,98.281895%
+"Tesla V100-SXM2-16GB (0)","tricubic_51_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.013453%,0.014025%,0.013644%
+"Tesla V100-SXM2-16GB (0)","tricubic_51_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",3.322340%,3.341973%,3.327247%
+"Tesla V100-SXM2-16GB (0)","tricubic_51_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",8.144067%,8.186883%,8.159800%
+"Tesla V100-SXM2-16GB (0)","tricubic_51_gpu",10,"stall_other","Issue Stall Reasons (Other)",3.034415%,3.049636%,3.039042%
+"Tesla V100-SXM2-16GB (0)","tricubic_51_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+== tricubic2 NOCORNER
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'tricubic2_51_gpu' for 'sm_70'
+ptxas info    : Function properties for tricubic2_51_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 86 registers, 416 bytes cmem[0], 32 bytes cmem[2]
+==135992== NVPROF is profiling process 135992, command: ./tricubic2 512 1024 1024 10
+==135992== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+initial mean = 0.000003
+init time = 0.281488 sec
+device buffer alloc time = 0.186942 sec
+data load time = 2.008273 sec (4.979402 GB/sec)
+compute time = 45.614903 sec
+data save time = 0.427641 sec (4.676822 GB/sec)
+device buffer free time = 48.237908 sec
+final mean = -0.000005
+==135992== Profiling application: ./tricubic2 512 1024 1024 10
+==135992== Profiling result:
+==135992== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla V100-SXM2-16GB (0)","tricubic2_51_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",78.009967%,78.385305%,78.175466%
+"Tesla V100-SXM2-16GB (0)","tricubic2_51_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",12.439652%,12.806305%,12.653412%
+"Tesla V100-SXM2-16GB (0)","tricubic2_51_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",6.795374%,6.843487%,6.819827%
+"Tesla V100-SXM2-16GB (0)","tricubic2_51_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",0.828921%,0.841631%,0.834817%
+"Tesla V100-SXM2-16GB (0)","tricubic2_51_gpu",10,"achieved_occupancy","Achieved Occupancy",0.246138,0.246174,0.246162
+"Tesla V100-SXM2-16GB (0)","tricubic2_51_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"Tesla V100-SXM2-16GB (0)","tricubic2_51_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",98.510832%,98.510832%,98.510832%
+"Tesla V100-SXM2-16GB (0)","tricubic2_51_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.005113%,0.005215%,0.005141%
+"Tesla V100-SXM2-16GB (0)","tricubic2_51_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",0.731488%,0.735484%,0.733450%
+"Tesla V100-SXM2-16GB (0)","tricubic2_51_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",0.561098%,0.566003%,0.563791%
+"Tesla V100-SXM2-16GB (0)","tricubic2_51_gpu",10,"stall_other","Issue Stall Reasons (Other)",0.213512%,0.215060%,0.214098%
+"Tesla V100-SXM2-16GB (0)","tricubic2_51_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+== uxx1 NOCORNER
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'uxx1_65_gpu' for 'sm_70'
+ptxas info    : Function properties for uxx1_65_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 71 registers, 436 bytes cmem[0], 8 bytes cmem[2]
+==140412== NVPROF is profiling process 140412, command: ./uxx1 512 512 1024 10
+==140412== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+c1 = 0.680375, c2 = -0.211234
+initial mean = -0.000005
+init time = 0.296224 sec
+device buffer alloc time = 0.116726 sec
+data load time = 0.531337 sec (9.410218 GB/sec)
+compute time = 4.145373 sec
+data save time = 0.124287 sec (8.045908 GB/sec)
+device buffer free time = 4.917790 sec
+final mean = nan
+==140412== Profiling application: ./uxx1 512 512 1024 10
+==140412== Profiling result:
+==140412== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla V100-SXM2-16GB (0)","uxx1_65_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",79.070764%,79.146269%,79.100150%
+"Tesla V100-SXM2-16GB (0)","uxx1_65_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",1.444263%,1.450471%,1.448083%
+"Tesla V100-SXM2-16GB (0)","uxx1_65_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",9.668058%,9.704919%,9.691712%
+"Tesla V100-SXM2-16GB (0)","uxx1_65_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",1.618132%,1.622770%,1.620351%
+"Tesla V100-SXM2-16GB (0)","uxx1_65_gpu",10,"achieved_occupancy","Achieved Occupancy",0.206266,0.206722,0.206518
+"Tesla V100-SXM2-16GB (0)","uxx1_65_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"Tesla V100-SXM2-16GB (0)","uxx1_65_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",97.845877%,97.845877%,97.845877%
+"Tesla V100-SXM2-16GB (0)","uxx1_65_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.013145%,0.013629%,0.013391%
+"Tesla V100-SXM2-16GB (0)","uxx1_65_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",4.570747%,4.590209%,4.582104%
+"Tesla V100-SXM2-16GB (0)","uxx1_65_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",2.567143%,2.575248%,2.571332%
+"Tesla V100-SXM2-16GB (0)","uxx1_65_gpu",10,"stall_other","Issue Stall Reasons (Other)",0.970551%,0.974658%,0.972877%
+"Tesla V100-SXM2-16GB (0)","uxx1_65_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+== wave13pt NOCORNER
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'wave13pt_63_gpu' for 'sm_70'
+ptxas info    : Function properties for wave13pt_63_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 69 registers, 412 bytes cmem[0]
+==141997== NVPROF is profiling process 141997, command: ./wave13pt 512 1024 1024 10
+==141997== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+c0 = 0.680375, c1 = -0.035206, c2 = 0.094366
+initial mean = -0.000005
+init time = 0.271677 sec
+device buffer alloc time = 0.115715 sec
+data load time = 0.720325 sec (8.329575 GB/sec)
+compute time = 4.823597 sec
+data save time = 0.222953 sec (8.970496 GB/sec)
+device buffer free time = 5.882677 sec
+final mean = -0.000030
+==141997== Profiling application: ./wave13pt 512 1024 1024 10
+==141997== Profiling result:
+==141997== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla V100-SXM2-16GB (0)","wave13pt_63_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",71.399991%,71.738481%,71.543970%
+"Tesla V100-SXM2-16GB (0)","wave13pt_63_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.724043%,0.732890%,0.729461%
+"Tesla V100-SXM2-16GB (0)","wave13pt_63_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",13.786460%,13.941934%,13.881534%
+"Tesla V100-SXM2-16GB (0)","wave13pt_63_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",2.019996%,2.046349%,2.033032%
+"Tesla V100-SXM2-16GB (0)","wave13pt_63_gpu",10,"achieved_occupancy","Achieved Occupancy",0.146840,0.149648,0.149043
+"Tesla V100-SXM2-16GB (0)","wave13pt_63_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"Tesla V100-SXM2-16GB (0)","wave13pt_63_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",96.849104%,96.849104%,96.849104%
+"Tesla V100-SXM2-16GB (0)","wave13pt_63_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.014567%,0.015315%,0.014854%
+"Tesla V100-SXM2-16GB (0)","wave13pt_63_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",6.429934%,6.513517%,6.475585%
+"Tesla V100-SXM2-16GB (0)","wave13pt_63_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",3.994308%,4.042708%,4.020474%
+"Tesla V100-SXM2-16GB (0)","wave13pt_63_gpu",10,"stall_other","Issue Stall Reasons (Other)",1.291794%,1.310707%,1.301091%
+"Tesla V100-SXM2-16GB (0)","wave13pt_63_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+== whispering NOCORNER
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'whispering_76_gpu' for 'sm_70'
+ptxas info    : Function properties for whispering_76_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 41 registers, 468 bytes cmem[0], 8 bytes cmem[2]
+==143459== NVPROF is profiling process 143459, command: ./whispering 8192 16384 10
+==143459== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+mu = 0.680375, epsilon = -0.211234
+initial mean = -0.000005
+init time = 0.269785 sec
+device buffer alloc time = 0.130753 sec
+data load time = 1.377027 sec (3.631010 GB/sec)
+compute time = 3.738628 sec
+data save time = 0.742682 sec (6.732355 GB/sec)
+device buffer free time = 5.989190 sec
+final mean = 23963086.000000
+==143459== Profiling application: ./whispering 8192 16384 10
+==143459== Profiling result:
+==143459== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla V100-SXM2-16GB (0)","whispering_76_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",92.650695%,93.171294%,93.079273%
+"Tesla V100-SXM2-16GB (0)","whispering_76_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",1.035989%,1.123568%,1.054222%
+"Tesla V100-SXM2-16GB (0)","whispering_76_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",3.277866%,3.521386%,3.317442%
+"Tesla V100-SXM2-16GB (0)","whispering_76_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",0.711760%,0.765650%,0.722126%
+"Tesla V100-SXM2-16GB (0)","whispering_76_gpu",10,"achieved_occupancy","Achieved Occupancy",0.486790,0.487259,0.487062
+"Tesla V100-SXM2-16GB (0)","whispering_76_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"Tesla V100-SXM2-16GB (0)","whispering_76_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.920027%,99.920027%,99.920027%
+"Tesla V100-SXM2-16GB (0)","whispering_76_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.007978%,0.009088%,0.008427%
+"Tesla V100-SXM2-16GB (0)","whispering_76_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",0.791723%,0.850528%,0.801578%
+"Tesla V100-SXM2-16GB (0)","whispering_76_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",0.616601%,0.660768%,0.624347%
+"Tesla V100-SXM2-16GB (0)","whispering_76_gpu",10,"stall_other","Issue Stall Reasons (Other)",0.386741%,0.419072%,0.392586%
+"Tesla V100-SXM2-16GB (0)","whispering_76_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%

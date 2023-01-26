@@ -1,0 +1,185 @@
+dmikushin@tesla-cmc:~/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/kernelgen$ make
+kernelgen-gcc -D_GNU_SOURCE -Dreal=float -std=c99 -c ../vecadd.c -o vecadd.o
+subloop exctracted!!
+subloop exctracted!!
+KernelGen : NumExtractedLoops = 1 CurrentFunction:"vecadd" CurrentHeader:"10_orig.header"
+KernelGen : NumExtractedLoops = 2 CurrentFunction:"main" CurrentHeader:"28_orig.header"
+KernelGen : NumExtractedLoops = 3 CurrentFunction:"main" CurrentHeader:"23_orig.header"
+KernelGen : NumExtractedLoops = 4 CurrentFunction:"main" CurrentHeader:"14_orig.header"
+kernelgen-gcc -D_GNU_SOURCE -c ../timing.c -o timing.o
+kernelgen-gcc vecadd.o timing.o -o vecadd -lrt
+dmikushin@tesla-cmc:~/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/kernelgen$ kernelgen_runmode=1 kernelgen_verbose=64 kernelgen_szheap=$((1024*1024*512)) ./vecadd 256 256 256 6
+Host call: clock_gettime
+ptxas -v -arch=sm_20 -m64 /tmp/ad403378.ptx -o /tmp/f3214673.cubin --cloning=no 
+ptxas info    : 77952 bytes gmem, 168 bytes cmem[14]
+ptxas info    : Function properties for kernelgen_memalign
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_launch
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_free
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_start
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_hostcall
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for get_time_diff
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Compiling entry function '__kernelgen_main' for 'sm_20'
+ptxas info    : Function properties for __kernelgen_main
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 62 registers, 184 bytes cumulative stack size, 40 bytes cmem[0]
+ptxas info    : Function properties for get_time
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_finish
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for _main
+    112 bytes stack frame, 116 bytes spill stores, 116 bytes spill loads
+ptxas info    : Function properties for vecadd
+    72 bytes stack frame, 72 bytes spill stores, 72 bytes spill loads
+Merge: /tmp/f3214673.cubin /tmp/9c3a5fbb.cubin
+LEPC = 0x13d00
+Loaded '__kernelgen_main' at: 0x2a48600
+ptxas -v -arch=sm_20 -m64 /tmp/7a9b8743.ptx -o /tmp/bc642498.cubin --cloning=no --maxrregcount 63 
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function 'kernelgen_monitor' for 'sm_20'
+ptxas info    : Function properties for kernelgen_monitor
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 5 registers, 40 bytes cmem[0]
+regcount = 5, size = 80
+Loaded 'kernelgen_monitor' at: 0x1fb7b00
+getenv time = 5.872690e-04 sec
+atoi time = 4.635670e-04 sec
+atoi time = 4.485100e-04 sec
+atoi time = 4.467470e-04 sec
+atoi time = 4.469970e-04 sec
+Kernel function call __kernelgen_main_loop_14
+__kernelgen_main_loop_14 @ 0x82ea369cb3e0762abd8a37eea5e1e19c
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_main_loop_14: compile started --------------------->
+<------------------ __kernelgen_main_loop_14: compile completed ------------------->
+
+
+<------------------ __kernelgen_main_loop_14: compile started --------------------->
+ld -shared -o /tmp/c0d3cc67.so /tmp/2e291c74.o 
+Loaded '__kernelgen_main_loop_14' at: 0x7f52dc0052a0
+__kernelgen_main_loop_14 time = 1.917363e+00 sec
+initial mean = 0.518567
+printf time = 6.770240e-04 sec
+clock_gettime time = 4.537640e-04 sec
+Launcher invokes kernel __kernelgen_vecadd_loop_10
+Launcher invokes kernel __kernelgen_vecadd_loop_6_orig_orig
+Launcher invokes kernel __kernelgen_vecadd_loop_8_orig
+Kernel function call __kernelgen_main_loop_23
+__kernelgen_main_loop_23 @ 0xa7dc62aeda5d5defd99717b88ccad939
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_main_loop_23: compile started --------------------->
+<------------------ __kernelgen_main_loop_23: compile completed ------------------->
+
+Kernel function call __kernelgen_vecadd_loop_10
+__kernelgen_vecadd_loop_10 @ 0x06f7d5cfc014878224022d12ffcb89a7
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_vecadd_loop_10: compile started --------------------->
+<------------------ __kernelgen_vecadd_loop_10: compile completed ------------------->
+
+ptxas -v -arch=sm_20 -m64 /tmp/f31d90fb.ptx -o /tmp/0e738f77.cubin --cloning=no --maxrregcount 60 
+ptxas info    : 9 bytes gmem, 8 bytes cmem[14]
+ptxas info    : Compiling entry function '__kernelgen_vecadd_loop_10' for 'sm_20'
+ptxas info    : Function properties for __kernelgen_vecadd_loop_10
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 12 registers, 40 bytes cmem[0]
+regcount = 12, size = 336
+Loaded '__kernelgen_vecadd_loop_10' at: 0x300c560
+Launching kernel __kernelgen_vecadd_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 64, 64 }
+Finishing kernel __kernelgen_vecadd_loop_10
+__kernelgen_vecadd_loop_10 time = 2.998110e-03 sec
+only the kernel execution time = 2.482336e-03 sec
+Kernel function call __kernelgen_vecadd_loop_10
+__kernelgen_vecadd_loop_10 @ 0x5c9ee53e922478812a1071f3c0a01eb0
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_vecadd_loop_10: compile started --------------------->
+<------------------ __kernelgen_vecadd_loop_10: compile completed ------------------->
+
+ptxas -v -arch=sm_20 -m64 /tmp/52bfba5e.ptx -o /tmp/0b78bcff.cubin --cloning=no --maxrregcount 60 
+ptxas info    : 9 bytes gmem, 8 bytes cmem[14]
+ptxas info    : Compiling entry function '__kernelgen_vecadd_loop_10' for 'sm_20'
+ptxas info    : Function properties for __kernelgen_vecadd_loop_10
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 12 registers, 40 bytes cmem[0]
+regcount = 12, size = 336
+Loaded '__kernelgen_vecadd_loop_10' at: 0x300ce20
+Launching kernel __kernelgen_vecadd_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 64, 64 }
+Finishing kernel __kernelgen_vecadd_loop_10
+__kernelgen_vecadd_loop_10 time = 3.068013e-03 sec
+only the kernel execution time = 2.542752e-03 sec
+Kernel function call __kernelgen_vecadd_loop_10
+__kernelgen_vecadd_loop_10 @ 0x17163724ee78733c272fcfd11dca5c22
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_vecadd_loop_10: compile started --------------------->
+<------------------ __kernelgen_vecadd_loop_10: compile completed ------------------->
+
+ptxas -v -arch=sm_20 -m64 /tmp/3596d82f.ptx -o /tmp/f1cb8e49.cubin --cloning=no --maxrregcount 60 
+ptxas info    : 9 bytes gmem, 8 bytes cmem[14]
+ptxas info    : Compiling entry function '__kernelgen_vecadd_loop_10' for 'sm_20'
+ptxas info    : Function properties for __kernelgen_vecadd_loop_10
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 12 registers, 40 bytes cmem[0]
+regcount = 12, size = 336
+Loaded '__kernelgen_vecadd_loop_10' at: 0x30076a0
+Launching kernel __kernelgen_vecadd_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 64, 64 }
+Finishing kernel __kernelgen_vecadd_loop_10
+__kernelgen_vecadd_loop_10 time = 2.731360e-03 sec
+only the kernel execution time = 2.246592e-03 sec
+Kernel function call __kernelgen_vecadd_loop_10
+__kernelgen_vecadd_loop_10 @ 0x06f7d5cfc014878224022d12ffcb89a7
+Launching kernel __kernelgen_vecadd_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 64, 64 }
+Finishing kernel __kernelgen_vecadd_loop_10
+__kernelgen_vecadd_loop_10 time = 2.983124e-03 sec
+only the kernel execution time = 2.497760e-03 sec
+Kernel function call __kernelgen_vecadd_loop_10
+__kernelgen_vecadd_loop_10 @ 0x5c9ee53e922478812a1071f3c0a01eb0
+Launching kernel __kernelgen_vecadd_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 64, 64 }
+Finishing kernel __kernelgen_vecadd_loop_10
+__kernelgen_vecadd_loop_10 time = 2.982789e-03 sec
+only the kernel execution time = 2.524064e-03 sec
+Kernel function call __kernelgen_vecadd_loop_10
+__kernelgen_vecadd_loop_10 @ 0x17163724ee78733c272fcfd11dca5c22
+Launching kernel __kernelgen_vecadd_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 64, 64 }
+Finishing kernel __kernelgen_vecadd_loop_10
+__kernelgen_vecadd_loop_10 time = 2.638293e-03 sec
+only the kernel execution time = 2.240352e-03 sec
+clock_gettime time = 3.877880e-04 sec
+compute time = 0.497535 sec
+printf time = 3.917560e-04 sec
+Kernel function call __kernelgen_main_loop_28
+__kernelgen_main_loop_28 @ 0x29db892be0d562e372c179a50b41c5a5
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_main_loop_28: compile started --------------------->
+<------------------ __kernelgen_main_loop_28: compile completed ------------------->
+
+
+<------------------ __kernelgen_main_loop_28: compile started --------------------->
+ld -shared -o /tmp/282bb2a9.so /tmp/38938c2c.o 
+Loaded '__kernelgen_main_loop_28' at: 0x7f52dbe04240
+__kernelgen_main_loop_28 time = 6.415303e-01 sec
+final mean = 10.636981
+printf time = 5.142300e-04 sec
+fflush time = 2.774660e-04 sec
+Kernel __kernelgen_main has finished

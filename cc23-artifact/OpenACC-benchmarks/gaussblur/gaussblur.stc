@@ -1,0 +1,24 @@
+stencil gaussblur_patus (
+	float grid U(0 .. nx-1, 0 .. ny-1),
+	float param s0, float param s1, float param s2,
+	float param s4, float param s5, float param s8)
+{
+	domainsize = (2 .. nx-3, 2 .. ny-3);
+    
+	operation
+	{
+		float f = 1 / (s0 + 4 * (s1 + s2 + s4 + s8) + 8 * s5);
+    	
+		U[x, y; t+1] = f * (
+			s0 * U[x, y; t] +
+			s1 * (U[x-1, y; t] + U[x+1, y; t] + U[x, y-1; t] + U[x, y+1; t]) +
+			s2 * (U[x-1, y-1; t] + U[x+1, y-1; t] + U[x-1, y+1; t] + U[x+1, y+1; t]) +
+			s4 * (U[x-2, y; t] + U[x+2, y; t] + U[x, y-2; t] + U[x, y+2; t]) +
+			s5 * (
+				U[x-2, y-1; t] + U[x-1, y-2; t] + U[x+1, y-2; t] + U[x+2, y-1; t] +
+        		U[x-2, y+1; t] + U[x-1, y+2; t] + U[x+1, y+2; t] + U[x+2, y+1; t]
+        	) +
+			s8 * (U[x-2, y-2; t] + U[x+2, y-2; t] + U[x-2, y+2; t] + U[x+2, y+2; t])
+		);
+	}
+}

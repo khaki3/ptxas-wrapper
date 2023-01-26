@@ -1,0 +1,179 @@
+#!/usr/bin/perl -w
+##===----------------------------------------------------------------------===##
+##
+##     KernelGen -- A prototype of LLVM-based auto-parallelizing Fortran/C
+##        compiler for NVIDIA GPUs, targeting numerical modeling code.
+##
+## This file is distributed under the University of Illinois Open Source
+## License. See LICENSE.TXT for details.
+##
+##===----------------------------------------------------------------------===##
+
+if (scalar(@ARGV) == 0)
+{
+	print "Usage: mkchart [-percent] [-second2all] [-xlabel label] [-ylabel label] [-o filename] <report1> [<report2> ...]\n";
+	print "where optional -second2all flag indicates all reports must be\n";
+	print "recalculated relatively to the second measure of the first report\n";
+	exit(1);
+}
+
+my(@reports) = ();
+my($percent) = 0;
+my($second2all) = 0;
+my($xlabel) = "";
+my($ylabel) = "";
+my($output) = "a.pdf";
+my($expect_filename) = 0;
+my($expect_xlabel) = 0;
+my($expect_ylabel) = 0;
+foreach $ARG (@ARGV)
+{
+	if ($ARG eq "-percent")
+	{
+		$percent = 1;
+		next;
+	}
+	if ($ARG eq "-second2all")
+	{
+		$second2all = 1;
+		next;
+	}
+	if ($ARG eq "-xlabel")
+	{
+		$expect_xlabel = 1;
+		next;
+	}
+	if ($ARG eq "-ylabel")
+	{
+		$expect_ylabel = 1;
+		next;
+	}
+	if ($ARG eq "-o")
+	{
+		$expect_filename = 1;
+		next;
+	}
+	if ($expect_xlabel == 1)
+	{
+		$xlabel = $ARG;
+		$expect_xlabel = 0;
+		next;
+	}
+	if ($expect_ylabel == 1)
+	{
+		$ylabel = $ARG;
+		$expect_ylabel = 0;
+		next;
+	}
+	if ($expect_filename == 1)
+	{
+		$output = $ARG;
+		$expect_filename = 0;
+		next;
+	}
+	push(@reports, $ARG);
+}
+
+my($cluster) = "=cluster";
+my($i) = 0;
+for ( ; $i < scalar(@reports); $i++)
+{
+	my($name) = $reports[$i];
+	$name =~ s/^.*\.//g;
+	$cluster .= " " . $name;
+}
+$cluster .= "\n";
+
+my($bargraph) = "";
+if ($percent)
+{
+$bargraph = <<END;
+$cluster
+column=last
+=sortbmarks
+=percent
+yformat=%g%%
+xlabel=$xlabel
+ylabel=$ylabel
+END
+}
+else
+{
+$bargraph = <<END;
+$cluster
+column=last
+horizline=1
+=sortbmarks
+yformat=%g
+xlabel=$xlabel
+ylabel=$ylabel
+END
+}	
+
+my(%second);
+for ($i = 0; $i < scalar(@reports); $i++)
+{
+	if ($i != 0)
+	{
+		$bargraph .= "=multi\n";
+	}
+	my($report) = $reports[$i];
+	my($content) = join("", `cat $report`);
+	if ($content =~ m/Times\sfor\schart\s\>\>\n(?<CONTENT>.*)\<\<\sTimes\sfor\schart/xs)
+	{
+		my($content) = $+{CONTENT};
+		if ($second2all)
+		{
+			# Parse each line of the content.
+			my(@lines) = split("\n", $content);
+			foreach $line (@lines)
+			{
+				if ($line !~ m/(?<NAME>\w+)\s+(?<VFIRST>[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)\s+(?<VSECOND>[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)\s+\=\>\s+(?<VTHIRD>[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)/)
+				{
+					print "Cannot parse chart data line:\n$line\n";
+					exit;
+				}
+
+				my($name) = $+{NAME};
+				my($vfirst) = $+{VFIRST};
+				my($vsecond) = $+{VSECOND};
+				my($vthird) = $+{VTHIRD};
+				
+				if ($i == 0)
+				{
+					# If first report, index its second values.
+					$second{$name} = $vsecond;
+				}
+				else
+				{
+					# If not a first report, replace its second value
+					# with the one indexed from the first report.
+					$vsecond = $second{$name};
+					$vthird = $vsecond / $vfirst;
+				}
+				
+				# Output the final content line.
+				$bargraph .= "$name $vfirst $vsecond => $vthird\n";
+			}
+		}
+		else
+		{
+			$bargraph .= $content;
+		}
+	}
+	else
+	{
+		print "Error parsing input file $report\n";
+		exit(1);
+	}
+}
+
+use File::Basename;
+my $dirname = dirname(__FILE__);
+
+print "$bargraph\n";
+
+`echo "$bargraph" >bargraph.input`;
+`$dirname/bargraph -pdf bargraph.input >$output`;
+`rm -rf bargraph.input`;
+

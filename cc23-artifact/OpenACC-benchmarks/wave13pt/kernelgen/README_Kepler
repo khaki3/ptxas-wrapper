@@ -1,0 +1,190 @@
+marcusmae@M17xR4:~/forge/kernelgen/doc/pavt_2013/demo/complex/wave13pt/kernelgen$ make
+kernelgen-gcc -D_GNU_SOURCE -Dreal=float -std=c99 -c ../wave13pt.c -o wave13pt.o
+subloop exctracted!!
+subloop exctracted!!
+KernelGen : NumExtractedLoops = 1 CurrentFunction:"wave13pt" CurrentHeader:"10_orig.header"
+KernelGen : NumExtractedLoops = 2 CurrentFunction:"main" CurrentHeader:"28_orig.header"
+KernelGen : NumExtractedLoops = 3 CurrentFunction:"main" CurrentHeader:"23_orig.header"
+KernelGen : NumExtractedLoops = 4 CurrentFunction:"main" CurrentHeader:"14_orig.header"
+kernelgen-gcc -D_GNU_SOURCE -c ../timing.c -o timing.o
+kernelgen-gcc wave13pt.o timing.o -o wave13pt -lrt
+marcusmae@M17xR4:~/forge/kernelgen/doc/pavt_2013/demo/complex/wave13pt/kernelgen$ kernelgen_runmode=1 kernelgen_verbose=64 kernelgen_szheap=$((1024*1024*512)) ./wave13pt 256 256 256 6
+Host call: clock_gettime
+ptxas -v -arch=sm_30 -m64 /tmp/6b2ae995.ptx -o /tmp/54559ca5.cubin --cloning=no 
+ptxas info    : 82064 bytes gmem
+ptxas info    : Function properties for kernelgen_launch
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_memalign
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_free
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_start
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_hostcall
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for get_time_diff
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Compiling entry function '__kernelgen_main' for 'sm_30'
+ptxas info    : Function properties for __kernelgen_main
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 63 registers, 312 bytes cumulative stack size, 328 bytes cmem[0]
+ptxas info    : Function properties for get_time
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for kernelgen_finish
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for _main
+    152 bytes stack frame, 160 bytes spill stores, 152 bytes spill loads
+ptxas info    : Function properties for wave13pt
+    160 bytes stack frame, 160 bytes spill stores, 172 bytes spill loads
+Merge: /tmp/54559ca5.cubin /tmp/94b07cd3.cubin
+LEPC = 0x3bfc0
+Loaded '__kernelgen_main' at: 0x1d29e90
+ptxas -v -arch=sm_30 -m64 /tmp/c082e607.ptx -o /tmp/5a119c4e.cubin --cloning=no --maxrregcount 63 
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function 'kernelgen_monitor' for 'sm_30'
+ptxas info    : Function properties for kernelgen_monitor
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 6 registers, 328 bytes cmem[0]
+regcount = 6, size = 192
+Loaded 'kernelgen_monitor' at: 0x1f5b6a0
+getenv time = 4.110060e-04 sec
+atoi time = 1.943250e-04 sec
+atoi time = 1.707840e-04 sec
+atoi time = 1.658970e-04 sec
+atoi time = 1.638010e-04 sec
+rand time = 1.283110e-04 sec
+rand time = 1.240920e-04 sec
+rand time = 1.240980e-04 sec
+c0 = 0.840188, c1 = 0.394383, c2 = 0.783099
+printf time = 2.211410e-04 sec
+Kernel function call __kernelgen_main_loop_14
+__kernelgen_main_loop_14 @ 0x5f36eccb2046ddd283bf1e99b72fe661
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_main_loop_14: compile started --------------------->
+<------------------ __kernelgen_main_loop_14: compile completed ------------------->
+
+
+<------------------ __kernelgen_main_loop_14: compile started --------------------->
+ld -shared -o /tmp/031cb107.so /tmp/b5aa7adc.o 
+Loaded '__kernelgen_main_loop_14' at: 0x7fda425aa2a0
+__kernelgen_main_loop_14 time = 1.268603e+00 sec
+initial mean = 0.518567
+printf time = 1.424600e-04 sec
+clock_gettime time = 8.130400e-05 sec
+Launcher invokes kernel __kernelgen_wave13pt_loop_10
+Launcher invokes kernel __kernelgen_wave13pt_loop_6_orig_orig
+Launcher invokes kernel __kernelgen_wave13pt_loop_8_orig
+Kernel function call __kernelgen_main_loop_23
+__kernelgen_main_loop_23 @ 0xa3d3be5e955446269c6f4e9841daaab7
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_main_loop_23: compile started --------------------->
+<------------------ __kernelgen_main_loop_23: compile completed ------------------->
+
+Kernel function call __kernelgen_wave13pt_loop_10
+__kernelgen_wave13pt_loop_10 @ 0xf0db1632065d1f48cd6278aadcb81db9
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_wave13pt_loop_10: compile started --------------------->
+<------------------ __kernelgen_wave13pt_loop_10: compile completed ------------------->
+
+ptxas -v -arch=sm_30 -m64 /tmp/e52cb3de.ptx -o /tmp/5e91a76a.cubin --cloning=no --maxrregcount 63 
+ptxas info    : 9 bytes gmem
+ptxas info    : Compiling entry function '__kernelgen_wave13pt_loop_10' for 'sm_30'
+ptxas info    : Function properties for __kernelgen_wave13pt_loop_10
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 34 registers, 328 bytes cmem[0]
+regcount = 34, size = 1088
+Loaded '__kernelgen_wave13pt_loop_10' at: 0x24d3910
+Launching kernel __kernelgen_wave13pt_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 63, 63 }
+Finishing kernel __kernelgen_wave13pt_loop_10
+__kernelgen_wave13pt_loop_10 time = 6.815032e-03 sec
+only the kernel execution time = 6.694848e-03 sec
+Kernel function call __kernelgen_wave13pt_loop_10
+__kernelgen_wave13pt_loop_10 @ 0xa47ad118031e4bbfb21436ef9e48eb09
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_wave13pt_loop_10: compile started --------------------->
+<------------------ __kernelgen_wave13pt_loop_10: compile completed ------------------->
+
+ptxas -v -arch=sm_30 -m64 /tmp/d97dbff8.ptx -o /tmp/f65deee0.cubin --cloning=no --maxrregcount 63 
+ptxas info    : 9 bytes gmem
+ptxas info    : Compiling entry function '__kernelgen_wave13pt_loop_10' for 'sm_30'
+ptxas info    : Function properties for __kernelgen_wave13pt_loop_10
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 34 registers, 328 bytes cmem[0]
+regcount = 34, size = 1088
+Loaded '__kernelgen_wave13pt_loop_10' at: 0x2516ed0
+Launching kernel __kernelgen_wave13pt_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 63, 63 }
+Finishing kernel __kernelgen_wave13pt_loop_10
+__kernelgen_wave13pt_loop_10 time = 6.959280e-03 sec
+only the kernel execution time = 6.838976e-03 sec
+Kernel function call __kernelgen_wave13pt_loop_10
+__kernelgen_wave13pt_loop_10 @ 0xbf9dd51d8d21e4ecae6151a167a8f8f0
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_wave13pt_loop_10: compile started --------------------->
+<------------------ __kernelgen_wave13pt_loop_10: compile completed ------------------->
+
+ptxas -v -arch=sm_30 -m64 /tmp/2f4831a9.ptx -o /tmp/53c6dc4f.cubin --cloning=no --maxrregcount 63 
+ptxas info    : 9 bytes gmem
+ptxas info    : Compiling entry function '__kernelgen_wave13pt_loop_10' for 'sm_30'
+ptxas info    : Function properties for __kernelgen_wave13pt_loop_10
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 34 registers, 328 bytes cmem[0]
+regcount = 34, size = 1088
+Loaded '__kernelgen_wave13pt_loop_10' at: 0x28790a0
+Launching kernel __kernelgen_wave13pt_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 63, 63 }
+Finishing kernel __kernelgen_wave13pt_loop_10
+__kernelgen_wave13pt_loop_10 time = 6.794189e-03 sec
+only the kernel execution time = 6.683552e-03 sec
+Kernel function call __kernelgen_wave13pt_loop_10
+__kernelgen_wave13pt_loop_10 @ 0xf0db1632065d1f48cd6278aadcb81db9
+Launching kernel __kernelgen_wave13pt_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 63, 63 }
+Finishing kernel __kernelgen_wave13pt_loop_10
+__kernelgen_wave13pt_loop_10 time = 6.828102e-03 sec
+only the kernel execution time = 6.704704e-03 sec
+Kernel function call __kernelgen_wave13pt_loop_10
+__kernelgen_wave13pt_loop_10 @ 0xa47ad118031e4bbfb21436ef9e48eb09
+Launching kernel __kernelgen_wave13pt_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 63, 63 }
+Finishing kernel __kernelgen_wave13pt_loop_10
+__kernelgen_wave13pt_loop_10 time = 6.922500e-03 sec
+only the kernel execution time = 6.858880e-03 sec
+Kernel function call __kernelgen_wave13pt_loop_10
+__kernelgen_wave13pt_loop_10 @ 0xbf9dd51d8d21e4ecae6151a167a8f8f0
+Launching kernel __kernelgen_wave13pt_loop_10
+    blockDim = { 32, 4, 4 }
+    gridDim = { 8, 63, 63 }
+Finishing kernel __kernelgen_wave13pt_loop_10
+__kernelgen_wave13pt_loop_10 time = 6.692562e-03 sec
+only the kernel execution time = 6.646560e-03 sec
+clock_gettime time = 1.507820e-04 sec
+compute time = 2.743386 sec
+printf time = 9.610200e-05 sec
+Kernel function call __kernelgen_main_loop_28
+__kernelgen_main_loop_28 @ 0xf3d8798a84068ceb57a7e24b225ddeec
+No prebuilt kernel, compiling...
+
+<------------------ __kernelgen_main_loop_28: compile started --------------------->
+<------------------ __kernelgen_main_loop_28: compile completed ------------------->
+
+
+<------------------ __kernelgen_main_loop_28: compile started --------------------->
+ld -shared -o /tmp/d0d5250d.so /tmp/329d3e9d.o 
+Loaded '__kernelgen_main_loop_28' at: 0x7fda423a9240
+__kernelgen_main_loop_28 time = 3.479549e-01 sec
+final mean = 98055.007812
+printf time = 1.412110e-04 sec
+fflush time = 5.650500e-05 sec
+Kernel __kernelgen_main has finished

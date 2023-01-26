@@ -1,0 +1,67 @@
+marcusmae@M17xR4:~/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi$ make
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo -Dreal=float -c ../vecadd.c -o vecadd.o
+NOTE: your trial license will expire in 12 days, 21.6 hours.
+vecadd:
+     24, Generating present(w2[0:szarray])
+         Generating present(w1[0:szarray])
+         Generating present(w0[0:szarray])
+         Generating compute capability 1.0 binary
+         Generating compute capability 2.0 binary
+     29, Loop is parallelizable
+     34, Loop is parallelizable
+     39, Loop is parallelizable
+         Accelerator kernel generated
+         34, #pragma acc loop gang, vector(4) /* blockIdx.y threadIdx.y */
+         39, #pragma acc loop gang, vector(64) /* blockIdx.x threadIdx.x */
+             CC 1.0 : 18 registers; 68 shared, 8 constant, 0 local memory bytes
+             CC 2.0 : 22 registers; 0 shared, 84 constant, 0 local memory bytes
+main:
+    116, Accelerator scalar kernel generated
+         Generating compute capability 1.0 binary
+         CC 1.0 : 0 registers; 0 shared, 0 constant, 0 local memory bytes
+         Generating compute capability 2.0 binary
+         CC 2.0 : 2 registers; 0 shared, 32 constant, 0 local memory bytes
+    143, Generating create(w2[0:szarray])
+         Generating create(w1[0:szarray])
+         Generating create(w0[0:szarray])
+    169, Generating update device(w2[0:szarray])
+         Generating update device(w1[0:szarray])
+         Generating update device(w0[0:szarray])
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo -c ../timing.c -o timing.o
+NOTE: your trial license will expire in 12 days, 21.6 hours.
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo vecadd.o timing.o -o vecadd
+marcusmae@M17xR4:~/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi$ ./vecadd 256 256 256 6
+initial mean = 0.518567
+init time = 0.249574 sec
+device buffer alloc time = 0.000331 sec
+data load time = 0.032326 sec (5.800272 GB/sec)
+compute time = 0.025304 sec
+final mean = 0.499983
+
+Accelerator Kernel Timing data
+/home/marcusmae/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi/../vecadd.c
+  vecadd
+    24: region entered 6 times
+        time(us): total=25,291
+                  kernels=14,560
+        39: kernel launched 6 times
+            grid: [4x64]  block: [64x4]
+            time(us): total=14,560 max=2,438 min=2,412 avg=2,426
+/home/marcusmae/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi/../vecadd.c
+  main
+    169: region entered 1 time
+        time(us): total=75,286
+                  data=32,314
+/home/marcusmae/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi/../vecadd.c
+  main
+    143: region entered 1 time
+        time(us): init=0
+/home/marcusmae/forge/kernelgen/doc/pavt_2013/demo/complex/vecadd/pgi/../vecadd.c
+  main
+    116: region entered 1 time
+        time(us): total=249,543 init=244,688 region=4,855
+                  kernels=22
+        w/o init: total=4,855 max=4,855 min=4,855 avg=4,855
+        116: kernel launched 1 times
+            grid: [1]  block: [1]
+            time(us): total=22 max=22 min=22 avg=22

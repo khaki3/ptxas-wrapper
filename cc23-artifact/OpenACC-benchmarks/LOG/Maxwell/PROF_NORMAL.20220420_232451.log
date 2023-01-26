@@ -1,0 +1,394 @@
+== divergence NORMAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'divergence_63_gpu' for 'sm_50'
+ptxas info    : Function properties for divergence_63_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 40 registers, 388 bytes cmem[0]
+==3291== NVPROF is profiling process 3291, command: ./divergence 512 1024 1024 10
+==3291== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+alpha = 0.680375, beta = -0.211234, gamma = 0.566198
+initial mean = -0.000003
+init time = 1.820566 sec
+device buffer alloc time = 0.009242 sec
+data load time = 0.786031 sec (7.633285 GB/sec)
+compute time = 36.512595 sec
+data save time = 0.353680 sec (5.654831 GB/sec)
+device buffer free time = 37.661649 sec
+final mean = -0.000004
+==3291== Profiling application: ./divergence 512 1024 1024 10
+==3291== Profiling result:
+==3291== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"NVIDIA GeForce GTX TITAN X (0)","divergence_63_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",80.550173%,80.879014%,80.768663%
+"NVIDIA GeForce GTX TITAN X (0)","divergence_63_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.012700%,0.013769%,0.013372%
+"NVIDIA GeForce GTX TITAN X (0)","divergence_63_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",5.363429%,5.448113%,5.388680%
+"NVIDIA GeForce GTX TITAN X (0)","divergence_63_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",2.114355%,2.153761%,2.127170%
+"NVIDIA GeForce GTX TITAN X (0)","divergence_63_gpu",10,"achieved_occupancy","Achieved Occupancy",0.707119,0.707582,0.707355
+"NVIDIA GeForce GTX TITAN X (0)","divergence_63_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"NVIDIA GeForce GTX TITAN X (0)","divergence_63_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.857814%,99.857814%,99.857814%
+"NVIDIA GeForce GTX TITAN X (0)","divergence_63_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.003331%,0.004345%,0.003508%
+"NVIDIA GeForce GTX TITAN X (0)","divergence_63_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",1.933450%,1.967214%,1.945372%
+"NVIDIA GeForce GTX TITAN X (0)","divergence_63_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",4.557954%,4.637838%,4.584252%
+"NVIDIA GeForce GTX TITAN X (0)","divergence_63_gpu",10,"stall_other","Issue Stall Reasons (Other)",5.129836%,5.221324%,5.163801%
+"NVIDIA GeForce GTX TITAN X (0)","divergence_63_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.004925%,0.005601%,0.005182%
+== gameoflife NORMAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'gameoflife_55_gpu' for 'sm_50'
+ptxas info    : Function properties for gameoflife_55_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 32 registers, 348 bytes cmem[0], 32 bytes cmem[2]
+==3519== NVPROF is profiling process 3519, command: ./gameoflife 32768 32768 10
+==3519== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+initial mean = -0.000003
+init time = 1.833239 sec
+device buffer alloc time = 0.009499 sec
+data load time = 0.796332 sec (10.046066 GB/sec)
+compute time = 44.909886 sec
+data save time = 0.705244 sec (5.671799 GB/sec)
+device buffer free time = 46.421027 sec
+final mean = -0.000000
+==3519== Profiling application: ./gameoflife 32768 32768 10
+==3519== Profiling result:
+==3519== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"NVIDIA GeForce GTX TITAN X (0)","gameoflife_55_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",10.138044%,10.189398%,10.163465%
+"NVIDIA GeForce GTX TITAN X (0)","gameoflife_55_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.000196%,0.000198%,0.000196%
+"NVIDIA GeForce GTX TITAN X (0)","gameoflife_55_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",63.458820%,63.596242%,63.532847%
+"NVIDIA GeForce GTX TITAN X (0)","gameoflife_55_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",0.176751%,0.177155%,0.176959%
+"NVIDIA GeForce GTX TITAN X (0)","gameoflife_55_gpu",10,"achieved_occupancy","Achieved Occupancy",0.980092,0.981244,0.980510
+"NVIDIA GeForce GTX TITAN X (0)","gameoflife_55_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"NVIDIA GeForce GTX TITAN X (0)","gameoflife_55_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.994849%,99.994849%,99.994849%
+"NVIDIA GeForce GTX TITAN X (0)","gameoflife_55_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.000967%,0.000977%,0.000972%
+"NVIDIA GeForce GTX TITAN X (0)","gameoflife_55_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",1.190574%,1.193523%,1.192242%
+"NVIDIA GeForce GTX TITAN X (0)","gameoflife_55_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",0.113387%,0.113723%,0.113544%
+"NVIDIA GeForce GTX TITAN X (0)","gameoflife_55_gpu",10,"stall_other","Issue Stall Reasons (Other)",24.745253%,24.920923%,24.819445%
+"NVIDIA GeForce GTX TITAN X (0)","gameoflife_55_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000321%,0.000335%,0.000329%
+== gaussblur NORMAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'gaussblur_60_gpu' for 'sm_50'
+ptxas info    : Function properties for gaussblur_60_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 55 registers, 376 bytes cmem[0]
+==4266== NVPROF is profiling process 4266, command: ./gaussblur 32768 32768 10
+==4266== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+s0 = 0.680375, s1 = -0.211234, s2 = 0.566198
+s4 = 0.596880, s5 = 0.823295, s8 = -0.604897
+initial mean = -0.000003
+init time = 1.829579 sec
+device buffer alloc time = 0.008838 sec
+data load time = 0.802855 sec (9.964436 GB/sec)
+compute time = 48.093554 sec
+data save time = 0.704166 sec (5.680478 GB/sec)
+device buffer free time = 49.609476 sec
+final mean = 0.000002
+==4266== Profiling application: ./gaussblur 32768 32768 10
+==4266== Profiling result:
+==4266== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"NVIDIA GeForce GTX TITAN X (0)","gaussblur_60_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",42.229747%,42.409059%,42.345314%
+"NVIDIA GeForce GTX TITAN X (0)","gaussblur_60_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.011034%,0.011526%,0.011233%
+"NVIDIA GeForce GTX TITAN X (0)","gaussblur_60_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",26.869886%,27.021568%,26.954480%
+"NVIDIA GeForce GTX TITAN X (0)","gaussblur_60_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",3.192538%,3.219640%,3.201444%
+"NVIDIA GeForce GTX TITAN X (0)","gaussblur_60_gpu",10,"achieved_occupancy","Achieved Occupancy",0.495787,0.495904,0.495859
+"NVIDIA GeForce GTX TITAN X (0)","gaussblur_60_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"NVIDIA GeForce GTX TITAN X (0)","gaussblur_60_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.989003%,99.989003%,99.989003%
+"NVIDIA GeForce GTX TITAN X (0)","gaussblur_60_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.002205%,0.002813%,0.002406%
+"NVIDIA GeForce GTX TITAN X (0)","gaussblur_60_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",3.622244%,3.641932%,3.631933%
+"NVIDIA GeForce GTX TITAN X (0)","gaussblur_60_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",3.928270%,3.953093%,3.941318%
+"NVIDIA GeForce GTX TITAN X (0)","gaussblur_60_gpu",10,"stall_other","Issue Stall Reasons (Other)",14.502446%,14.717296%,14.631559%
+"NVIDIA GeForce GTX TITAN X (0)","gaussblur_60_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",5.235259%,5.302214%,5.280312%
+== gradient NORMAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'gradient_65_gpu' for 'sm_50'
+ptxas info    : Function properties for gradient_65_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 40 registers, 388 bytes cmem[0]
+==4442== NVPROF is profiling process 4442, command: ./gradient 512 1024 1024 10
+==4442== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+alpha = 0.680375, beta = -0.211234, gamma = 0.566198
+initial mean = -0.000003
+init time = 1.813766 sec
+device buffer alloc time = 0.009150 sec
+data load time = 0.802786 sec (7.473970 GB/sec)
+compute time = 37.556313 sec
+data save time = 1.078180 sec (1.854977 GB/sec)
+device buffer free time = 39.446496 sec
+final mean = 0.000001
+==4442== Profiling application: ./gradient 512 1024 1024 10
+==4442== Profiling result:
+==4442== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"NVIDIA GeForce GTX TITAN X (0)","gradient_65_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",87.906253%,87.925938%,87.911552%
+"NVIDIA GeForce GTX TITAN X (0)","gradient_65_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.001836%,0.001969%,0.001878%
+"NVIDIA GeForce GTX TITAN X (0)","gradient_65_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",5.880584%,5.889496%,5.886520%
+"NVIDIA GeForce GTX TITAN X (0)","gradient_65_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",1.060422%,1.062346%,1.061648%
+"NVIDIA GeForce GTX TITAN X (0)","gradient_65_gpu",10,"achieved_occupancy","Achieved Occupancy",0.720152,0.720360,0.720263
+"NVIDIA GeForce GTX TITAN X (0)","gradient_65_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"NVIDIA GeForce GTX TITAN X (0)","gradient_65_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.846484%,99.846484%,99.846484%
+"NVIDIA GeForce GTX TITAN X (0)","gradient_65_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.002388%,0.003336%,0.002796%
+"NVIDIA GeForce GTX TITAN X (0)","gradient_65_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",1.057395%,1.059096%,1.058368%
+"NVIDIA GeForce GTX TITAN X (0)","gradient_65_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",2.438842%,2.443502%,2.441974%
+"NVIDIA GeForce GTX TITAN X (0)","gradient_65_gpu",10,"stall_other","Issue Stall Reasons (Other)",1.632460%,1.637114%,1.635150%
+"NVIDIA GeForce GTX TITAN X (0)","gradient_65_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000109%,0.000121%,0.000114%
+== jacobi NORMAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'jacobi_33_gpu' for 'sm_50'
+ptxas info    : Function properties for jacobi_33_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 42 registers, 376 bytes cmem[0]
+==4684== NVPROF is profiling process 4684, command: ./jacobi 32768 32768 10
+==4684== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+c0 = 0.680375, c1 = -0.052809, c2 = 0.141550
+initial mean = -0.000003
+init time = 1.832135 sec
+device buffer alloc time = 0.009362 sec
+data load time = 0.793423 sec (10.082897 GB/sec)
+compute time = 45.973801 sec
+data save time = 0.703654 sec (5.684613 GB/sec)
+device buffer free time = 47.480307 sec
+final mean = -0.000012
+==4684== Profiling application: ./jacobi 32768 32768 10
+==4684== Profiling result:
+==4684== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"NVIDIA GeForce GTX TITAN X (0)","jacobi_33_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",60.467333%,60.796948%,60.618058%
+"NVIDIA GeForce GTX TITAN X (0)","jacobi_33_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.003135%,0.003179%,0.003157%
+"NVIDIA GeForce GTX TITAN X (0)","jacobi_33_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",17.027771%,17.136420%,17.091060%
+"NVIDIA GeForce GTX TITAN X (0)","jacobi_33_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",4.741747%,4.803560%,4.779494%
+"NVIDIA GeForce GTX TITAN X (0)","jacobi_33_gpu",10,"achieved_occupancy","Achieved Occupancy",0.490528,0.490599,0.490558
+"NVIDIA GeForce GTX TITAN X (0)","jacobi_33_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"NVIDIA GeForce GTX TITAN X (0)","jacobi_33_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.994984%,99.994984%,99.994984%
+"NVIDIA GeForce GTX TITAN X (0)","jacobi_33_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.003289%,0.004235%,0.003410%
+"NVIDIA GeForce GTX TITAN X (0)","jacobi_33_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",4.425664%,4.457606%,4.443475%
+"NVIDIA GeForce GTX TITAN X (0)","jacobi_33_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",8.874055%,8.968514%,8.924397%
+"NVIDIA GeForce GTX TITAN X (0)","jacobi_33_gpu",10,"stall_other","Issue Stall Reasons (Other)",4.097863%,4.171423%,4.136852%
+"NVIDIA GeForce GTX TITAN X (0)","jacobi_33_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000085%,0.000105%,0.000097%
+== lapgsrb NORMAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'lapgsrb_63_gpu' for 'sm_50'
+ptxas info    : Function properties for lapgsrb_63_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 92 registers, 376 bytes cmem[0]
+==5434== NVPROF is profiling process 5434, command: ./lapgsrb 512 1024 1024 10
+==5434== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+c0 = 0.680375, c1 = -0.035206, c2 = 0.047183, c3 = 0.099480
+initial mean = 0.000018
+init time = 1.817496 sec
+device buffer alloc time = 0.004867 sec
+data load time = 0.409204 sec (9.775069 GB/sec)
+compute time = 11.429311 sec
+data save time = 0.354694 sec (5.638665 GB/sec)
+device buffer free time = 12.198140 sec
+final mean = 0.002658
+==5434== Profiling application: ./lapgsrb 512 1024 1024 10
+==5434== Profiling result:
+==5434== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"NVIDIA GeForce GTX TITAN X (0)","lapgsrb_63_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",57.333848%,57.713499%,57.598847%
+"NVIDIA GeForce GTX TITAN X (0)","lapgsrb_63_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.003973%,0.004011%,0.003983%
+"NVIDIA GeForce GTX TITAN X (0)","lapgsrb_63_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",25.054446%,25.346785%,25.158275%
+"NVIDIA GeForce GTX TITAN X (0)","lapgsrb_63_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",5.146408%,5.265723%,5.242234%
+"NVIDIA GeForce GTX TITAN X (0)","lapgsrb_63_gpu",10,"achieved_occupancy","Achieved Occupancy",0.239171,0.239258,0.239205
+"NVIDIA GeForce GTX TITAN X (0)","lapgsrb_63_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"NVIDIA GeForce GTX TITAN X (0)","lapgsrb_63_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.560822%,99.560822%,99.560822%
+"NVIDIA GeForce GTX TITAN X (0)","lapgsrb_63_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.004615%,0.004719%,0.004670%
+"NVIDIA GeForce GTX TITAN X (0)","lapgsrb_63_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",2.869175%,2.900038%,2.884485%
+"NVIDIA GeForce GTX TITAN X (0)","lapgsrb_63_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",7.038185%,7.126112%,7.086277%
+"NVIDIA GeForce GTX TITAN X (0)","lapgsrb_63_gpu",10,"stall_other","Issue Stall Reasons (Other)",1.841296%,1.895097%,1.883283%
+"NVIDIA GeForce GTX TITAN X (0)","lapgsrb_63_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.101425%,0.146635%,0.137945%
+== laplacian NORMAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'laplacian_63_gpu' for 'sm_50'
+ptxas info    : Function properties for laplacian_63_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 40 registers, 368 bytes cmem[0]
+==5621== NVPROF is profiling process 5621, command: ./laplacian 512 1024 1024 10
+==5621== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+alpha = 0.680375, beta = -0.211234
+initial mean = 0.000018
+init time = 1.818732 sec
+device buffer alloc time = 0.005042 sec
+data load time = 0.409414 sec (14.655110 GB/sec)
+compute time = 9.188297 sec
+data save time = 0.354414 sec (5.643111 GB/sec)
+device buffer free time = 9.957233 sec
+final mean = 0.000003
+==5621== Profiling application: ./laplacian 512 1024 1024 10
+==5621== Profiling result:
+==5621== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"NVIDIA GeForce GTX TITAN X (0)","laplacian_63_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",77.682624%,77.921870%,77.775891%
+"NVIDIA GeForce GTX TITAN X (0)","laplacian_63_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.003447%,0.003598%,0.003510%
+"NVIDIA GeForce GTX TITAN X (0)","laplacian_63_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",6.806415%,6.876798%,6.847824%
+"NVIDIA GeForce GTX TITAN X (0)","laplacian_63_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",2.807967%,2.837316%,2.825946%
+"NVIDIA GeForce GTX TITAN X (0)","laplacian_63_gpu",10,"achieved_occupancy","Achieved Occupancy",0.712609,0.712910,0.712719
+"NVIDIA GeForce GTX TITAN X (0)","laplacian_63_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"NVIDIA GeForce GTX TITAN X (0)","laplacian_63_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.847073%,99.847073%,99.847073%
+"NVIDIA GeForce GTX TITAN X (0)","laplacian_63_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.002973%,0.003068%,0.003003%
+"NVIDIA GeForce GTX TITAN X (0)","laplacian_63_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",2.267151%,2.290630%,2.280559%
+"NVIDIA GeForce GTX TITAN X (0)","laplacian_63_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",5.901481%,5.967762%,5.942331%
+"NVIDIA GeForce GTX TITAN X (0)","laplacian_63_gpu",10,"stall_other","Issue Stall Reasons (Other)",4.288228%,4.337952%,4.320546%
+"NVIDIA GeForce GTX TITAN X (0)","laplacian_63_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000332%,0.000445%,0.000391%
+== tricubic NORMAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'tricubic_51_gpu' for 'sm_50'
+ptxas info    : Function properties for tricubic_51_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 128 registers, 384 bytes cmem[0], 24 bytes cmem[2]
+==10317== NVPROF is profiling process 10317, command: ./tricubic 512 1024 1024 10
+==10317== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+initial mean = 0.000003
+init time = 1.839270 sec
+device buffer alloc time = 0.012136 sec
+data load time = 0.982145 sec (10.181801 GB/sec)
+compute time = 92.665229 sec
+data save time = 0.353937 sec (5.650721 GB/sec)
+device buffer free time = 94.013512 sec
+final mean = -0.000041
+==10317== Profiling application: ./tricubic 512 1024 1024 10
+==10317== Profiling result:
+==10317== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"NVIDIA GeForce GTX TITAN X (0)","tricubic_51_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",4.129735%,4.217098%,4.147555%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic_51_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.000590%,0.000593%,0.000591%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic_51_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",89.867361%,90.059302%,89.942750%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic_51_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",0.987105%,0.993182%,0.989959%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic_51_gpu",10,"achieved_occupancy","Achieved Occupancy",0.246637,0.246810,0.246761
+"NVIDIA GeForce GTX TITAN X (0)","tricubic_51_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic_51_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.479602%,99.479602%,99.479602%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic_51_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.003351%,0.003448%,0.003373%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic_51_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",1.147216%,1.157877%,1.152009%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic_51_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",1.359496%,1.482141%,1.464777%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic_51_gpu",10,"stall_other","Issue Stall Reasons (Other)",2.295627%,2.306757%,2.298942%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic_51_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000042%,0.000047%,0.000044%
+== tricubic2 NORMAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'tricubic2_51_gpu' for 'sm_50'
+ptxas info    : Function properties for tricubic2_51_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 62 registers, 384 bytes cmem[0], 24 bytes cmem[2]
+==15085== NVPROF is profiling process 15085, command: ./tricubic2 512 1024 1024 10
+==15085== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+initial mean = 0.000003
+init time = 1.823484 sec
+device buffer alloc time = 0.012554 sec
+data load time = 0.985516 sec (10.146968 GB/sec)
+compute time = 98.436308 sec
+data save time = 0.352943 sec (5.666641 GB/sec)
+device buffer free time = 99.787389 sec
+final mean = -0.000034
+==15085== Profiling application: ./tricubic2 512 1024 1024 10
+==15085== Profiling result:
+==15085== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"NVIDIA GeForce GTX TITAN X (0)","tricubic2_51_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",69.488798%,69.730694%,69.551455%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic2_51_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.000328%,0.000336%,0.000332%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic2_51_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",25.221196%,25.446035%,25.386917%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic2_51_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",0.202253%,0.202888%,0.202662%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic2_51_gpu",10,"achieved_occupancy","Achieved Occupancy",0.493438,0.493631,0.493516
+"NVIDIA GeForce GTX TITAN X (0)","tricubic2_51_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic2_51_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.011633%,99.011633%,99.011633%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic2_51_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.001665%,0.001754%,0.001684%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic2_51_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",2.281398%,2.294349%,2.291254%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic2_51_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",0.525079%,0.527790%,0.526966%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic2_51_gpu",10,"stall_other","Issue Stall Reasons (Other)",2.034277%,2.041099%,2.038730%
+"NVIDIA GeForce GTX TITAN X (0)","tricubic2_51_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000000%,0.000000%,0.000000%
+== uxx1 NORMAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'uxx1_65_gpu' for 'sm_50'
+ptxas info    : Function properties for uxx1_65_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 69 registers, 404 bytes cmem[0], 8 bytes cmem[2]
+==15577== NVPROF is profiling process 15577, command: ./uxx1 512 512 1024 10
+==15577== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+c1 = 0.680375, c2 = -0.211234
+initial mean = -0.000005
+init time = 1.836005 sec
+device buffer alloc time = 0.008053 sec
+data load time = 0.602593 sec (8.297475 GB/sec)
+compute time = 12.436605 sec
+data save time = 0.177165 sec (5.644470 GB/sec)
+device buffer free time = 13.224487 sec
+final mean = -nan
+==15577== Profiling application: ./uxx1 512 512 1024 10
+==15577== Profiling result:
+==15577== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"NVIDIA GeForce GTX TITAN X (0)","uxx1_65_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",70.188185%,70.696240%,70.321606%
+"NVIDIA GeForce GTX TITAN X (0)","uxx1_65_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.005223%,0.005278%,0.005248%
+"NVIDIA GeForce GTX TITAN X (0)","uxx1_65_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",13.733950%,13.775697%,13.755693%
+"NVIDIA GeForce GTX TITAN X (0)","uxx1_65_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",3.704439%,4.177123%,4.084529%
+"NVIDIA GeForce GTX TITAN X (0)","uxx1_65_gpu",10,"achieved_occupancy","Achieved Occupancy",0.246804,0.246953,0.246872
+"NVIDIA GeForce GTX TITAN X (0)","uxx1_65_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"NVIDIA GeForce GTX TITAN X (0)","uxx1_65_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.680721%,99.680721%,99.680721%
+"NVIDIA GeForce GTX TITAN X (0)","uxx1_65_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.009137%,0.010131%,0.009312%
+"NVIDIA GeForce GTX TITAN X (0)","uxx1_65_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",3.542956%,3.570431%,3.557508%
+"NVIDIA GeForce GTX TITAN X (0)","uxx1_65_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",6.780779%,6.811337%,6.793570%
+"NVIDIA GeForce GTX TITAN X (0)","uxx1_65_gpu",10,"stall_other","Issue Stall Reasons (Other)",1.457354%,1.495705%,1.466824%
+"NVIDIA GeForce GTX TITAN X (0)","uxx1_65_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.005225%,0.006567%,0.005711%
+== wave13pt NORMAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'wave13pt_63_gpu' for 'sm_50'
+ptxas info    : Function properties for wave13pt_63_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 66 registers, 380 bytes cmem[0]
+==15907== NVPROF is profiling process 15907, command: ./wave13pt 512 1024 1024 10
+==15907== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+c0 = 0.680375, c1 = -0.035206, c2 = 0.094366
+initial mean = -0.000005
+init time = 1.805580 sec
+device buffer alloc time = 0.007632 sec
+data load time = 0.616280 sec (9.735840 GB/sec)
+compute time = 15.202794 sec
+data save time = 0.353341 sec (5.660257 GB/sec)
+device buffer free time = 16.180115 sec
+final mean = -0.000036
+==15907== Profiling application: ./wave13pt 512 1024 1024 10
+==15907== Profiling result:
+==15907== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"NVIDIA GeForce GTX TITAN X (0)","wave13pt_63_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",71.766188%,71.985721%,71.819292%
+"NVIDIA GeForce GTX TITAN X (0)","wave13pt_63_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.004024%,0.004122%,0.004050%
+"NVIDIA GeForce GTX TITAN X (0)","wave13pt_63_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",14.727270%,14.842737%,14.814107%
+"NVIDIA GeForce GTX TITAN X (0)","wave13pt_63_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",4.756896%,4.803136%,4.785174%
+"NVIDIA GeForce GTX TITAN X (0)","wave13pt_63_gpu",10,"achieved_occupancy","Achieved Occupancy",0.239417,0.239980,0.239597
+"NVIDIA GeForce GTX TITAN X (0)","wave13pt_63_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"NVIDIA GeForce GTX TITAN X (0)","wave13pt_63_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.601732%,99.601732%,99.601732%
+"NVIDIA GeForce GTX TITAN X (0)","wave13pt_63_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.004466%,0.005237%,0.004644%
+"NVIDIA GeForce GTX TITAN X (0)","wave13pt_63_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",2.254653%,2.273792%,2.268147%
+"NVIDIA GeForce GTX TITAN X (0)","wave13pt_63_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",5.434597%,5.478340%,5.466944%
+"NVIDIA GeForce GTX TITAN X (0)","wave13pt_63_gpu",10,"stall_other","Issue Stall Reasons (Other)",0.831146%,0.838717%,0.837131%
+"NVIDIA GeForce GTX TITAN X (0)","wave13pt_63_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.000401%,0.000557%,0.000511%
+== whispering NORMAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'whispering_76_gpu' for 'sm_50'
+ptxas info    : Function properties for whispering_76_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 52 registers, 436 bytes cmem[0], 16 bytes cmem[2]
+==16397== NVPROF is profiling process 16397, command: ./whispering 8192 16384 10
+==16397== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+mu = 0.680375, epsilon = -0.211234
+initial mean = -0.000005
+init time = 1.827611 sec
+device buffer alloc time = 0.009264 sec
+data load time = 0.601501 sec (8.312540 GB/sec)
+compute time = 13.148010 sec
+data save time = 1.062797 sec (4.704565 GB/sec)
+device buffer free time = 14.821645 sec
+final mean = 25425076.000000
+==16397== Profiling application: ./whispering 8192 16384 10
+==16397== Profiling result:
+==16397== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"NVIDIA GeForce GTX TITAN X (0)","whispering_76_gpu",10,"stall_memory_dependency","Issue Stall Reasons (Data Request)",82.903988%,83.034912%,82.977065%
+"NVIDIA GeForce GTX TITAN X (0)","whispering_76_gpu",10,"stall_memory_throttle","Issue Stall Reasons (Memory Throttle)",0.013440%,0.014989%,0.014335%
+"NVIDIA GeForce GTX TITAN X (0)","whispering_76_gpu",10,"stall_exec_dependency","Issue Stall Reasons (Execution Dependency)",11.796120%,11.897223%,11.851284%
+"NVIDIA GeForce GTX TITAN X (0)","whispering_76_gpu",10,"stall_pipe_busy","Issue Stall Reasons (Pipe Busy)",0.372278%,0.376143%,0.374120%
+"NVIDIA GeForce GTX TITAN X (0)","whispering_76_gpu",10,"achieved_occupancy","Achieved Occupancy",0.482312,0.483334,0.482606
+"NVIDIA GeForce GTX TITAN X (0)","whispering_76_gpu",10,"stall_sync","Issue Stall Reasons (Synchronization)",0.000000%,0.000000%,0.000000%
+"NVIDIA GeForce GTX TITAN X (0)","whispering_76_gpu",10,"warp_execution_efficiency","Warp Execution Efficiency",99.980038%,99.980038%,99.980038%
+"NVIDIA GeForce GTX TITAN X (0)","whispering_76_gpu",10,"stall_constant_memory_dependency","Issue Stall Reasons (Immediate constant)",0.004002%,0.005479%,0.004616%
+"NVIDIA GeForce GTX TITAN X (0)","whispering_76_gpu",10,"stall_inst_fetch","Issue Stall Reasons (Instructions Fetch)",1.223204%,1.231786%,1.226515%
+"NVIDIA GeForce GTX TITAN X (0)","whispering_76_gpu",10,"stall_not_selected","Issue Stall Reasons (Not Selected)",0.831659%,0.841005%,0.837233%
+"NVIDIA GeForce GTX TITAN X (0)","whispering_76_gpu",10,"stall_other","Issue Stall Reasons (Other)",2.378923%,2.426297%,2.409417%
+"NVIDIA GeForce GTX TITAN X (0)","whispering_76_gpu",10,"stall_texture","Issue Stall Reasons (Texture)",0.295057%,0.317392%,0.305416%

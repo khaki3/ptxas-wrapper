@@ -1,0 +1,68 @@
+marcusmae@M17xR4:~/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi$ make clean
+rm -rf *.o laplacian
+marcusmae@M17xR4:~/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi$ make
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo -Dreal=float -c ../laplacian.c -o laplacian.o
+NOTE: your trial license will expire in 13 days, 18.6 hours.
+laplacian:
+     25, Generating present(w1[0:szarray])
+         Generating present(w0[0:szarray])
+         Generating compute capability 1.0 binary
+         Generating compute capability 2.0 binary
+     30, Loop is parallelizable
+     35, Loop is parallelizable
+     40, Loop is parallelizable
+         Accelerator kernel generated
+         35, #pragma acc loop gang, vector(4) /* blockIdx.y threadIdx.y */
+         40, #pragma acc loop gang, vector(64) /* blockIdx.x threadIdx.x */
+             CC 1.0 : 28 registers; 68 shared, 8 constant, 0 local memory bytes
+             CC 2.0 : 31 registers; 0 shared, 84 constant, 0 local memory bytes
+main:
+    123, Accelerator scalar kernel generated
+         Generating compute capability 1.0 binary
+         CC 1.0 : 0 registers; 0 shared, 0 constant, 0 local memory bytes
+         Generating compute capability 2.0 binary
+         CC 2.0 : 2 registers; 0 shared, 32 constant, 0 local memory bytes
+    149, Generating create(w1[0:szarray])
+         Generating create(w0[0:szarray])
+    174, Generating update device(w1[0:szarray])
+         Generating update device(w0[0:szarray])
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo -c ../timing.c -o timing.o
+NOTE: your trial license will expire in 13 days, 18.6 hours.
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo laplacian.o timing.o -o laplacian
+marcusmae@M17xR4:~/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi$ ./laplacian 256 256 256 6
+alpha = 0.840188, beta = 0.394383
+initial mean = 0.500026
+init time = 0.263417 sec
+device buffer alloc time = 0.000574 sec
+data load time = 0.021623 sec (5.780873 GB/sec)
+compute time = 0.063917 sec
+final mean = 0.500028
+
+Accelerator Kernel Timing data
+/home/marcusmae/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi/../laplacian.c
+  laplacian
+    25: region entered 6 times
+        time(us): total=63,910
+                  kernels=31,675
+        40: kernel launched 6 times
+            grid: [4x63]  block: [64x4]
+            time(us): total=31,675 max=5,324 min=5,251 avg=5,279
+/home/marcusmae/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi/../laplacian.c
+  main
+    174: region entered 1 time
+        time(us): total=100,218
+                  data=21,568
+/home/marcusmae/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi/../laplacian.c
+  main
+    149: region entered 1 time
+        time(us): init=0
+/home/marcusmae/forge/kernelgen/doc/pavt_2013/demo/complex/laplacian/pgi/../laplacian.c
+  main
+    123: region entered 1 time
+        time(us): total=263,395 init=251,766 region=11,629
+                  kernels=39
+        w/o init: total=11,629 max=11,629 min=11,629 avg=11,629
+        123: kernel launched 1 times
+            grid: [1]  block: [1]
+            time(us): total=39 max=39 min=39 avg=39
+

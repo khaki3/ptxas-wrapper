@@ -1,0 +1,67 @@
+dmikushin@tesla-cmc:~/forge/kernelgen/doc/pavt_2013/demo/complex/wave13pt/pgi$ make
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo -Dreal=float -c ../wave13pt.c -o wave13pt.o
+wave13pt:
+     25, Generating present(w2[0:szarray])
+         Generating present(w1[0:szarray])
+         Generating present(w0[0:szarray])
+         Generating compute capability 1.0 binary
+         Generating compute capability 2.0 binary
+     30, Loop is parallelizable
+     35, Loop is parallelizable
+     40, Loop is parallelizable
+         Accelerator kernel generated
+         35, #pragma acc loop gang, vector(4) /* blockIdx.y threadIdx.y */
+         40, #pragma acc loop gang, vector(64) /* blockIdx.x threadIdx.x */
+             CC 1.0 : 32 registers; 80 shared, 4 constant, 0 local memory bytes
+             CC 2.0 : 63 registers; 0 shared, 96 constant, 0 local memory bytes
+main:
+    132, Accelerator scalar kernel generated
+         Generating compute capability 1.0 binary
+         CC 1.0 : 0 registers; 0 shared, 0 constant, 0 local memory bytes
+         Generating compute capability 2.0 binary
+         CC 2.0 : 2 registers; 0 shared, 32 constant, 0 local memory bytes
+    159, Generating create(w2[0:szarray])
+         Generating create(w1[0:szarray])
+         Generating create(w0[0:szarray])
+    185, Generating update device(w2[0:szarray])
+         Generating update device(w1[0:szarray])
+         Generating update device(w0[0:szarray])
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo -c ../timing.c -o timing.o
+pgcc -acc -O3 -Minfo=accel -ta=nvidia,time -Mcuda=keepgpu,keepbin,keepptx,ptxinfo wave13pt.o timing.o -o wave13pt
+dmikushin@tesla-cmc:~/forge/kernelgen/doc/pavt_2013/demo/complex/wave13pt/pgi$ ./wave13pt 256 256 256 6
+c0 = 0.840188, c1 = 0.394383, c2 = 0.783099
+initial mean = 0.518567
+init time = 1.659136 sec
+device buffer alloc time = 0.000709 sec
+data load time = 0.057198 sec (3.278085 GB/sec)
+compute time = 0.043447 sec
+final mean = 0.499976
+
+Accelerator Kernel Timing data
+/home/dmikushin/forge/kernelgen/doc/pavt_2013/demo/complex/wave13pt/pgi/../wave13pt.c
+  wave13pt
+    25: region entered 6 times
+        time(us): total=43,441
+                  kernels=42,769
+        40: kernel launched 6 times
+            grid: [4x63]  block: [64x4]
+            time(us): total=42,769 max=7,272 min=7,031 avg=7,128
+/home/dmikushin/forge/kernelgen/doc/pavt_2013/demo/complex/wave13pt/pgi/../wave13pt.c
+  main
+    185: region entered 1 time
+        time(us): total=130,679
+                  data=57,114
+/home/dmikushin/forge/kernelgen/doc/pavt_2013/demo/complex/wave13pt/pgi/../wave13pt.c
+  main
+    159: region entered 1 time
+        time(us): init=
+/home/dmikushin/forge/kernelgen/doc/pavt_2013/demo/complex/wave13pt/pgi/../wave13pt.c
+  main
+    132: region entered 1 time
+        time(us): total=1,659,113 init=1,658,864 region=249
+                  kernels=21
+        w/o init: total=249 max=249 min=249 avg=249
+        132: kernel launched 1 times
+            grid: [1]  block: [1]
+            time(us): total=21 max=21 min=21 avg=21
+

@@ -1,0 +1,178 @@
+== divergence ORIGINAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'divergence_63_gpu' for 'sm_70'
+ptxas info    : Function properties for divergence_63_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 40 registers, 420 bytes cmem[0]
+alpha = 0.680375, beta = -0.211234, gamma = 0.566198
+initial mean = -0.000003
+init time = 0.148880 sec
+device buffer alloc time = 0.153876 sec
+data load time = 0.678146 sec (8.847658 GB/sec)
+compute time = 0.149413 sec
+data save time = 0.214448 sec (9.326278 GB/sec)
+device buffer free time = 1.195934 sec
+final mean = -0.000004
+== gameoflife ORIGINAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'gameoflife_55_gpu' for 'sm_70'
+ptxas info    : Function properties for gameoflife_55_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 32 registers, 380 bytes cmem[0], 16 bytes cmem[2]
+initial mean = -0.000003
+init time = 0.149342 sec
+device buffer alloc time = 0.149430 sec
+data load time = 0.703817 sec (11.366584 GB/sec)
+compute time = 0.335987 sec
+data save time = 0.446888 sec (8.950797 GB/sec)
+device buffer free time = 1.636182 sec
+final mean = -0.000000
+== gaussblur ORIGINAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'gaussblur_60_gpu' for 'sm_70'
+ptxas info    : Function properties for gaussblur_60_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 48 registers, 408 bytes cmem[0]
+s0 = 0.680375, s1 = -0.211234, s2 = 0.566198
+s4 = 0.596880, s5 = 0.823295, s8 = -0.604897
+initial mean = -0.000003
+init time = 0.157066 sec
+device buffer alloc time = 0.153192 sec
+data load time = 0.705761 sec (11.335275 GB/sec)
+compute time = 0.199641 sec
+data save time = 0.445750 sec (8.973646 GB/sec)
+device buffer free time = 1.504417 sec
+final mean = 0.000002
+== gradient ORIGINAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'gradient_65_gpu' for 'sm_70'
+ptxas info    : Function properties for gradient_65_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 40 registers, 420 bytes cmem[0]
+alpha = 0.680375, beta = -0.211234, gamma = 0.566198
+initial mean = -0.000003
+init time = 0.129038 sec
+device buffer alloc time = 0.152031 sec
+data load time = 0.693144 sec (8.656206 GB/sec)
+compute time = 0.239172 sec
+data save time = 0.657605 sec (3.041339 GB/sec)
+device buffer free time = 1.742000 sec
+final mean = 0.000001
+== jacobi ORIGINAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'jacobi_33_gpu' for 'sm_70'
+ptxas info    : Function properties for jacobi_33_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 39 registers, 408 bytes cmem[0]
+c0 = 0.680375, c1 = -0.052809, c2 = 0.141550
+initial mean = -0.000003
+init time = 0.128774 sec
+device buffer alloc time = 0.152669 sec
+data load time = 0.714775 sec (11.192326 GB/sec)
+compute time = 0.182993 sec
+data save time = 0.450568 sec (8.877686 GB/sec)
+device buffer free time = 1.501061 sec
+final mean = -0.000012
+== lapgsrb ORIGINAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'lapgsrb_63_gpu' for 'sm_70'
+ptxas info    : Function properties for lapgsrb_63_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 88 registers, 408 bytes cmem[0]
+c0 = 0.680375, c1 = -0.035206, c2 = 0.047183, c3 = 0.099480
+initial mean = 0.000018
+init time = 0.136663 sec
+device buffer alloc time = 0.076982 sec
+data load time = 0.350255 sec (11.420245 GB/sec)
+compute time = 0.219089 sec
+data save time = 0.221998 sec (9.009074 GB/sec)
+device buffer free time = 0.868386 sec
+final mean = 0.002657
+== laplacian ORIGINAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'laplacian_63_gpu' for 'sm_70'
+ptxas info    : Function properties for laplacian_63_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 40 registers, 400 bytes cmem[0]
+alpha = 0.680375, beta = -0.211234
+initial mean = 0.000018
+init time = 0.119592 sec
+device buffer alloc time = 0.078928 sec
+data load time = 0.365036 sec (16.436723 GB/sec)
+compute time = 0.121262 sec
+data save time = 0.220963 sec (9.051288 GB/sec)
+device buffer free time = 0.786262 sec
+final mean = 0.000003
+== tricubic ORIGINAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'tricubic_51_gpu' for 'sm_70'
+ptxas info    : Function properties for tricubic_51_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 125 registers, 416 bytes cmem[0], 32 bytes cmem[2]
+initial mean = 0.000003
+init time = 0.127000 sec
+device buffer alloc time = 0.188539 sec
+data load time = 0.896107 sec (11.159376 GB/sec)
+compute time = 0.375477 sec
+data save time = 0.227325 sec (8.797990 GB/sec)
+device buffer free time = 1.687531 sec
+final mean = -0.000041
+== tricubic2 ORIGINAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'tricubic2_51_gpu' for 'sm_70'
+ptxas info    : Function properties for tricubic2_51_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 64 registers, 416 bytes cmem[0], 32 bytes cmem[2]
+initial mean = 0.000003
+init time = 0.130407 sec
+device buffer alloc time = 0.185820 sec
+data load time = 0.870361 sec (11.489481 GB/sec)
+compute time = 1.437651 sec
+data save time = 0.220368 sec (9.075722 GB/sec)
+device buffer free time = 2.714267 sec
+final mean = -0.000034
+== uxx1 ORIGINAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'uxx1_65_gpu' for 'sm_70'
+ptxas info    : Function properties for uxx1_65_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 64 registers, 436 bytes cmem[0], 8 bytes cmem[2]
+c1 = 0.680375, c2 = -0.211234
+initial mean = -0.000005
+init time = 0.126024 sec
+device buffer alloc time = 0.116463 sec
+data load time = 0.529142 sec (9.449265 GB/sec)
+compute time = 0.154205 sec
+data save time = 0.108775 sec (9.193292 GB/sec)
+device buffer free time = 0.908641 sec
+final mean = nan
+== wave13pt ORIGINAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'wave13pt_63_gpu' for 'sm_70'
+ptxas info    : Function properties for wave13pt_63_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 64 registers, 412 bytes cmem[0]
+c0 = 0.680375, c1 = -0.035206, c2 = 0.094366
+initial mean = -0.000005
+init time = 0.113506 sec
+device buffer alloc time = 0.112576 sec
+data load time = 0.532795 sec (11.261364 GB/sec)
+compute time = 0.226855 sec
+data save time = 0.225721 sec (8.860489 GB/sec)
+device buffer free time = 1.098010 sec
+final mean = -0.000036
+== whispering ORIGINAL
+ptxas info    : 64448 bytes gmem, 72 bytes cmem[3]
+ptxas info    : Compiling entry function 'whispering_76_gpu' for 'sm_70'
+ptxas info    : Function properties for whispering_76_gpu
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 40 registers, 468 bytes cmem[0], 8 bytes cmem[2]
+mu = 0.680375, epsilon = -0.211234
+initial mean = -0.000005
+init time = 0.135072 sec
+device buffer alloc time = 0.118583 sec
+data load time = 0.535482 sec (9.337382 GB/sec)
+compute time = 0.124917 sec
+data save time = 0.675838 sec (7.398227 GB/sec)
+device buffer free time = 1.454878 sec
+final mean = 25362332.000000

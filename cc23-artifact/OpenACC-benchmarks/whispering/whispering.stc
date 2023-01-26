@@ -1,0 +1,33 @@
+stencil whispering_patus (
+	float grid e(0 .. nx-1, 0 .. ny-1)[2],
+	float grid h(0 .. nx-1, 0 .. ny-1),
+	float grid u_em(0 .. nx-1, 0 .. ny-1),
+	const float grid ca(0 .. nx-1, 0 .. ny-1),
+	const float grid cb(0 .. nx-1, 0 .. ny-1),
+	const float grid da(0 .. nx-1, 0 .. ny-1),
+	const float grid db(0 .. nx-1, 0 .. ny-1),
+	float param MU, float param EPSILON
+)
+{
+    domainsize = (1 .. nx-2, 1 .. ny-2);
+    
+    operation 
+    {
+    	float e0 = ca[x, y] * e[x, y; t; 0] + cb[x, y] * (h[x, y+1; t] - h[x, y; t]);
+    	float e1 = ca[x, y] * e[x, y; t; 1] - cb[x, y] * (h[x+1, y; t] - h[x, y; t]);
+        
+        // e[x, y-1; t+1; 0]
+        float ey = ca[x, y-1] * e[x, y-1; t; 0] + cb[x, y-1] * (h[x, y; t] - h[x, y-1; t]);
+        
+        // e[x-1, y; t+1; 1]
+        float ex = ca[x-1, y] * e[x-1, y; t; 1] - cb[x-1, y] * (h[x, y; t] - h[x-1, y; t]);
+        
+        e[x, y; t+1; 0] = e0;
+        e[x, y; t+1; 1] = e1;
+
+        float h1 = da[x, y] * h[x, y; t] + db[x, y] * (e0 - ey + ex - e1);
+        h[x, y; t+1] = h1;
+        
+        u_em[x, y; t+1] = u_em[x, y; t] + 0.5 * (h1^2 / MU + EPSILON * (e0^2 + e1^2));
+    }
+}

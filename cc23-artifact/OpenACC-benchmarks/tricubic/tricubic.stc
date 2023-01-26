@@ -1,0 +1,112 @@
+stencil tricubic_patus (
+    float grid U(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+    const float grid a(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+    const float grid b(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+    const float grid c(0 .. nx-1, 0 .. ny-1, 0 .. ns-1)
+)
+{
+	domainsize = (1 .. nx-3, 1 .. nx-3, 1 .. nx-3);
+
+	operation
+	{
+		float w1_a = 1.0/6.0                   * a[x,y,z] * (a[x,y,z]+1.0) * (a[x,y,z]+2.0);
+		float w2_a = -0.5     * (a[x,y,z]-1.0)            * (a[x,y,z]+1.0) * (a[x,y,z]+2.0);
+		float w3_a =  0.5     * (a[x,y,z]-1.0) * a[x,y,z]                  * (a[x,y,z]+2.0);
+		float w4_a = -1.0/6.0 * (a[x,y,z]-1.0) * a[x,y,z] * (a[x,y,z]+1.0);
+
+		float w1_b = 1.0/6.0                   * b[x,y,z] * (b[x,y,z]+1.0) * (b[x,y,z]+2.0);
+		float w2_b = -0.5     * (b[x,y,z]-1.0)            * (b[x,y,z]+1.0) * (b[x,y,z]+2.0);
+		float w3_b =  0.5     * (b[x,y,z]-1.0) * b[x,y,z]                  * (b[x,y,z]+2.0);
+		float w4_b = -1.0/6.0 * (b[x,y,z]-1.0) * b[x,y,z] * (b[x,y,z]+1.0);
+
+		float w1_c = 1.0/6.0                   * c[x,y,z] * (c[x,y,z]+1.0) * (c[x,y,z]+2.0);
+		float w2_c = -0.5     * (c[x,y,z]-1.0)            * (c[x,y,z]+1.0) * (c[x,y,z]+2.0);
+		float w3_c =  0.5     * (c[x,y,z]-1.0) * c[x,y,z]                  * (c[x,y,z]+2.0);
+		float w4_c = -1.0/6.0 * (c[x,y,z]-1.0) * c[x,y,z] * (c[x,y,z]+1.0);
+		
+		U[x, y, z; t+1] =
+
+			w1_a * w1_b * w1_c * U[x-1, y-1, z-1; t] +	// w(1,1,1) = w1(a) w1(b) w1(c)
+			w2_a * w1_b * w1_c * U[x,   y-1, z-1; t] +
+			w3_a * w1_b * w1_c * U[x+1, y-1, z-1; t] +
+			w4_a * w1_b * w1_c * U[x+2, y-1, z-1; t] +
+			
+			w1_a * w2_b * w1_c * U[x-1, y, z-1; t] +
+			w2_a * w2_b * w1_c * U[x,   y, z-1; t] +
+			w3_a * w2_b * w1_c * U[x+1, y, z-1; t] +
+			w4_a * w2_b * w1_c * U[x+2, y, z-1; t] +
+
+			w1_a * w3_b * w1_c * U[x-1, y+1, z-1; t] +
+			w2_a * w3_b * w1_c * U[x,   y+1, z-1; t] +
+			w3_a * w3_b * w1_c * U[x+1, y+1, z-1; t] +
+			w4_a * w3_b * w1_c * U[x+2, y+1, z-1; t] +
+
+			w1_a * w4_b * w1_c * U[x-1, y+2, z-1; t] +
+			w2_a * w4_b * w1_c * U[x,   y+2, z-1; t] +
+			w3_a * w4_b * w1_c * U[x+1, y+2, z-1; t] +
+			w4_a * w4_b * w1_c * U[x+2, y+2, z-1; t] +
+
+
+			w1_a * w1_b * w2_c * U[x-1, y-1, z; t] +
+			w2_a * w1_b * w2_c * U[x,   y-1, z; t] +
+			w3_a * w1_b * w2_c * U[x+1, y-1, z; t] +
+			w4_a * w1_b * w2_c * U[x+2, y-1, z; t] +
+			
+			w1_a * w2_b * w2_c * U[x-1, y, z; t] +
+			w2_a * w2_b * w2_c * U[x,   y, z; t] +
+			w3_a * w2_b * w2_c * U[x+1, y, z; t] +
+			w4_a * w2_b * w2_c * U[x+2, y, z; t] +
+
+			w1_a * w3_b * w2_c * U[x-1, y+1, z; t] +
+			w2_a * w3_b * w2_c * U[x,   y+1, z; t] +
+			w3_a * w3_b * w2_c * U[x+1, y+1, z; t] +
+			w4_a * w3_b * w2_c * U[x+2, y+1, z; t] +
+
+			w1_a * w4_b * w2_c * U[x-1, y+2, z; t] +
+			w2_a * w4_b * w2_c * U[x,   y+2, z; t] +
+			w3_a * w4_b * w2_c * U[x+1, y+2, z; t] +
+			w4_a * w4_b * w2_c * U[x+2, y+2, z; t] +
+
+
+			w1_a * w1_b * w3_c * U[x-1, y-1, z+1; t] +
+			w2_a * w1_b * w3_c * U[x,   y-1, z+1; t] +
+			w3_a * w1_b * w3_c * U[x+1, y-1, z+1; t] +
+			w4_a * w1_b * w3_c * U[x+2, y-1, z+1; t] +
+			
+			w1_a * w2_b * w3_c * U[x-1, y, z+1; t] +
+			w2_a * w2_b * w3_c * U[x,   y, z+1; t] +
+			w3_a * w2_b * w3_c * U[x+1, y, z+1; t] +
+			w4_a * w2_b * w3_c * U[x+2, y, z+1; t] +
+
+			w1_a * w3_b * w3_c * U[x-1, y+1, z+1; t] +
+			w2_a * w3_b * w3_c * U[x,   y+1, z+1; t] +
+			w3_a * w3_b * w3_c * U[x+1, y+1, z+1; t] +
+			w4_a * w3_b * w3_c * U[x+2, y+1, z+1; t] +
+
+			w1_a * w4_b * w3_c * U[x-1, y+2, z+1; t] +
+			w2_a * w4_b * w3_c * U[x,   y+2, z+1; t] +
+			w3_a * w4_b * w3_c * U[x+1, y+2, z+1; t] +
+			w4_a * w4_b * w3_c * U[x+2, y+2, z+1; t] +
+
+
+			w1_a * w1_b * w4_c * U[x-1, y-1, z+2; t] +
+			w2_a * w1_b * w4_c * U[x,   y-1, z+2; t] +
+			w3_a * w1_b * w4_c * U[x+1, y-1, z+2; t] +
+			w4_a * w1_b * w4_c * U[x+2, y-1, z+2; t] +
+			
+			w1_a * w2_b * w4_c * U[x-1, y, z+2; t] +
+			w2_a * w2_b * w4_c * U[x,   y, z+2; t] +
+			w3_a * w2_b * w4_c * U[x+1, y, z+2; t] +
+			w4_a * w2_b * w4_c * U[x+2, y, z+2; t] +
+
+			w1_a * w3_b * w4_c * U[x-1, y+1, z+2; t] +
+			w2_a * w3_b * w4_c * U[x,   y+1, z+2; t] +
+			w3_a * w3_b * w4_c * U[x+1, y+1, z+2; t] +
+			w4_a * w3_b * w4_c * U[x+2, y+1, z+2; t] +
+
+			w1_a * w4_b * w4_c * U[x-1, y+2, z+2; t] +
+			w2_a * w4_b * w4_c * U[x,   y+2, z+2; t] +
+			w3_a * w4_b * w4_c * U[x+1, y+2, z+2; t] +
+			w4_a * w4_b * w4_c * U[x+2, y+2, z+2; t];
+	}
+}

@@ -1,0 +1,16 @@
+stencil gradient_patus (
+	const float grid V(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+	float grid Ux(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+	float grid Uy(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+	float grid Uz(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+	float param alpha, float param beta, float param gamma)
+{
+	domainsize = (1 .. nx-2, 1 .. ny-2, 1 .. ns-2);
+
+	operation
+	{
+		Ux[x, y, z; t] = alpha * (V[x+1, y, z] - V[x-1, y, z]);
+		Uy[x, y, z; t] = beta  * (V[x, y+1, z] - V[x, y-1, z]);
+		Uz[x, y, z; t] = gamma * (V[x, y, z+1] - V[x, y, z-1]);
+	}
+}

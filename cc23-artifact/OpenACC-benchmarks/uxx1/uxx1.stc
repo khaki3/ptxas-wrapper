@@ -1,0 +1,28 @@
+stencil uxx1_patus (
+    const float grid d1(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+    float grid u1(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+    const float grid xx(0 .. nx-1, 0 .. ny-1, 0 .. ns-1), 
+    const float grid xy(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+    const float grid xz(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+    float param dth, float param c1, float param c2)
+{
+    domainsize = (2 .. nx-2, 2 .. nx-2, 2 .. nx-2);
+
+    operation
+    {
+	    float d = 0.25 * (d1[x,y,z] + d1[x,y-1,z] + d1[x,y,z-1] + d1[x,y-1,z-1]);
+
+	    u1[x,y,z; t+1] = u1[x,y,z; t] + (dth / d) * (
+		    c1 * (
+			    xx[x,  y,z] - xx[x-1,y,z] +
+			    xy[x,y,  z] - xy[x,y-1,z] +
+			    xz[x,y,z  ] - xz[x,y,z-1]) +
+			     
+		    c2 * (
+			    xx[x+1,y,z] - xx[x-2,y,z] +
+			    xy[x,y+1,z] - xy[x,y-2,z] +
+			    xz[x,y,z+1] - xz[x,y,z-2])
+	    );
+    }
+}
+

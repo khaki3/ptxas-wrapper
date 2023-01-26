@@ -1,0 +1,17 @@
+stencil divergence_patus (
+	float grid V(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+	const float grid Ux(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+	const float grid Uy(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+	const float grid Uz(0 .. nx-1, 0 .. ny-1, 0 .. ns-1),
+	float param alpha, float param beta, float param gamma)
+{
+	domainsize = (1 .. nx-2, 1 .. ny-2, 1 .. ns-2);
+
+	operation
+	{
+		V[x, y, z; t] =
+			alpha * (Ux[x+1, y, z] - Ux[x-1, y, z]) +
+			beta  * (Uy[x, y+1, z] - Uy[x, y-1, z]) +
+			gamma * (Uz[x, y, z+1] - Uz[x, y, z-1]);
+	}
+}
